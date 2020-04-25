@@ -5,7 +5,7 @@ const app = require("express")();
 const { db } = require("./util/admin");
 const FBAuth = require("./util/fbAuth");
 const { login, signup } = require("./handlers/auth");
-const { updateProfile } = require("./handlers/users");
+const { updateProfile, getAuthenticatedUser } = require("./handlers/users");
 const {
   getOpenListings,
   getListing,
@@ -25,6 +25,7 @@ app.post("/login", login);
 app.post("/signup", signup);
 
 // User routes
+app.get("/user", FBAuth, getAuthenticatedUser);
 app.post("/user/:username", FBAuth, updateProfile);
 
 // Listing routes
@@ -57,8 +58,11 @@ exports.createNotificationOnCreateRequest = functions.firestore
           createdAt: snapshot.data().createdAt,
           username: snapshot.data().username,
           userImage: snapshot.data().userImage,
-          listingId: snapshot.data().listingId,
-          recipient: doc.data().username
+          recipient: doc.data().username,
+          body: {
+            listingId: snapshot.data().listingId
+          },
+          read: false
         });
       })
       .catch(err => {
@@ -87,8 +91,11 @@ exports.createNotificationOnCreateChatMessage = functions.firestore
         createdAt: snapshot.data().createdAt,
         sender: snapshot.data().sender,
         senderImage: snapshot.data().senderImage,
-        chatId: snapshot.data().chatId,
-        message: snapshot.data().message
+        body: {
+          chatId: snapshot.data().chatId,
+          message: snapshot.data().message
+        },
+        read: snapshot.data().read
       })
       .catch(err => {
         console.error(err);

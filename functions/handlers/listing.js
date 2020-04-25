@@ -51,7 +51,7 @@ exports.getListing = (req, res) => {
 
 exports.createListing = (req, res) => {
   const newListing = {
-    ...req.body,
+    body: { ...req.body },
     username: req.user.username,
     userImage: req.user.imageUrl,
     createdAt: new Date().toISOString(),

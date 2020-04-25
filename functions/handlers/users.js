@@ -16,3 +16,43 @@ exports.updateProfile = (req, res) => {
     });
 };
 
+exports.getAuthenticatedUser = (req, res) => {
+  let userData = {};
+
+  db.doc(`/users/${req.user.username}`)
+    .get()
+    .then(doc => {
+      if (doc.exists) {
+        userData.credentials = doc.data();
+        return db
+          .collection("listings")
+          .where("username", "==", req.user.username)
+          .get();
+      }
+    })
+    .then(data => {
+      userData.listings = [];
+      data.forEach(doc => {
+        userData.listings.push(doc.data());
+      });
+      return db
+        .collection(`notifications`)
+        .where("recipient", "==", req.user.username)
+        .limit(10)
+        .get();
+    })
+    .then(data => {
+      userData.notifications = [];
+      data.forEach(doc => {
+        userData.notifications.push({
+          ...doc.data(),
+          notificationId: doc.id
+        });
+      });
+      return res.json(userData);
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+};
