@@ -1,0 +1,34 @@
+.bg {
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logo {
+    width: 100%;
+}
+.center {
+    max-width: 500px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.subtitle {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: var(--white);
+    text-align: center;
+    margin-top: 0.5em;
+}
+.icon {
+    width: 2em;
+    margin: 1em;
+}
+.button {
+    margin-top: 2em;
+}

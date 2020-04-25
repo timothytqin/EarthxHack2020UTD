@@ -1,0 +1,15 @@
+.bg {
+    background-color: var(--nav-color) !important ;
+    height: 5em;
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo {
+    width: 13em;
+    margin-left: 1.5em;
+}
+.logo_container {
+    margin-top: 0.5em;
+}
