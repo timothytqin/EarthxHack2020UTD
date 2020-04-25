@@ -1,0 +1,45 @@
+.bg {
+    background-color: var(--side-color);
+    position: fixed;
+    height: 80vh;
+    width: 13rem;
+    border-radius: 0.5rem;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+.bg::-webkit-scrollbar {
+    display: none;
+}
+p {
+    color: var(--grey);
+    margin: 0;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+.num {
+    color: var(--grey);
+    margin-left: 0.7rem;
+}
+.checkboxes {
+    margin-top: 1rem;
+}
+h3 {
+    color: var(--white);
+    font-size: 1rem;
+    margin-bottom: 3rem;
+}
+
+@media only screen and (max-width: 900px) {
+    .bg {
+        top: 0;
+        left: 0;
+        z-index: 1300;
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        padding: 3rem;
+        padding-top: 4rem;
+    }
+}

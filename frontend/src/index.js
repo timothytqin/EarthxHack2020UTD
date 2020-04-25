@@ -1,17 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { fetchListings } from './actions/fetchListings';
+import reduxThunk from 'redux-thunk';
+import reducers from './reducers';
+import Products from './containers/Listings';
+import Product from './containers/Listing';
+import NavBar from './containers/NavBar';
+import Landing from './containers/Landing';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
+const store = createStore(
+    reducers,
+    composeWithDevTools(applyMiddleware(reduxThunk))
+);
+// store.dispatch(fetchLiquors());
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <Router>
+            <Route exact path="/" component={Landing} />
+            <Route path="/liquors" component={NavBar} />
+            <Route exact path="/liquors" component={Products} />
+            <Route exact path="/liquors/:id" component={Product} />
+        </Router>
+    </Provider>,
+    document.getElementById('root')
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
