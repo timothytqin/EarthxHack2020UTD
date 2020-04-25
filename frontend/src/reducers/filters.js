@@ -8,36 +8,14 @@ import {
 
 const initialFilters = {
     type: '',
-    category: [],
-    varietal: [],
-    country: [],
-    winery: [],
-    size: [],
-    price: [],
-    producer: [],
-    initialPrice: [],
-    initialSize: [],
-};
-
-const getMinMax = (property, products, ids) => {
-    let list = ids
-        .map((id) => products[id])
-        .map((product) => product[property]);
-    return [Math.min(...list), Math.max(...list)];
+    manufacturer: [],
+    model: [],
+    title: [],
+    course: [],
 };
 
 const filters = (state = initialFilters, action) => {
     switch (action.type) {
-        case RECEIVE_LISTINGS:
-            let size = getMinMax('size', action.payload, action.ids);
-            let price = getMinMax('salePrice', action.payload, action.ids);
-            return {
-                ...state,
-                size,
-                price,
-                initialPrice: price,
-                initialSize: size,
-            };
         case ADD_FILTER:
             return {
                 ...state,

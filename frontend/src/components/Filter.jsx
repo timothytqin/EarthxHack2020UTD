@@ -129,22 +129,6 @@ const Filter = (props) => {
     const type = useSelector((state) => state.filters.type);
     const availablefilters = useSelector((state) => getAvailableFilters(state));
     const reduxFilters = useSelector((state) => state.filters);
-    const initialSizeRange = useSelector((state) => state.filters.initialSize);
-    const initialPriceRange = useSelector(
-        (state) => state.filters.initialPrice
-    );
-
-    // Local state
-    const [priceRange, setPriceRange] = useState([]);
-    useEffect(() => {
-        setPriceRange(initialPriceRange);
-        console.log('setPriceRange()');
-    }, [initialPriceRange]);
-
-    const [sizeRange, setSizeRange] = useState([]);
-    useEffect(() => {
-        setSizeRange(initialSizeRange);
-    }, [initialSizeRange]);
 
     // Writing to Redux
     const dispatch = useDispatch();
@@ -158,18 +142,6 @@ const Filter = (props) => {
             dispatch(removeFilter(filterName, filterValue));
         }
     };
-    const handleChangePrice = (event, newValue) => {
-        setPriceRange(newValue);
-    };
-    const handleCommitChangePrice = () => {
-        dispatch(updateFilter('price', priceRange));
-    };
-    const handleChangeSize = (event, newValue) => {
-        setSizeRange(newValue);
-    };
-    const handleCommitChangeSize = () => {
-        dispatch(updateFilter('size', sizeRange));
-    };
     const filters = (
         <div className={styles.bg}>
             {!type && <p>Please choose a type to view more filter options:</p>}
@@ -180,21 +152,21 @@ const Filter = (props) => {
                     onChange={handleChangeType}
                 >
                     <FormControlLabel
-                        value="wine"
+                        value="laptop"
                         control={<GoldRadio />}
-                        label="wine"
+                        label="laptop"
                         className={classes.radio}
                     />
                     <FormControlLabel
-                        value="beer"
+                        value="tablet"
                         control={<GoldRadio />}
-                        label="beer"
+                        label="tablet"
                         className={classes.radio}
                     />
                     <FormControlLabel
-                        value="spirits"
+                        value="textbook"
                         control={<GoldRadio />}
-                        label="spirits"
+                        label="textbook"
                         className={classes.radio}
                     />
                     <FormControlLabel
@@ -264,35 +236,6 @@ const Filter = (props) => {
                         </ExpansionPanel>
                     ) : null;
                 })}
-            </div>
-            <div className={styles.sliders}>
-                <h3 className={classes.expansionSummary}>Price Range:</h3>
-                <Slider
-                    className={classes.slider}
-                    min={initialPriceRange[0]}
-                    max={initialPriceRange[1]}
-                    value={priceRange}
-                    onChange={handleChangePrice}
-                    onChangeCommitted={handleCommitChangePrice}
-                    valueLabelDisplay="on"
-                    valueLabelFormat={(x) => `$${x}`}
-                    step={10}
-                    marks
-                />
-                <h3 className={classes.expansionSummary}>
-                    Size Range:<span className={styles.num}>(ml)</span>
-                </h3>
-                <Slider
-                    className={classes.slider}
-                    min={initialSizeRange[0]}
-                    max={initialSizeRange[1]}
-                    value={sizeRange}
-                    onChange={handleChangeSize}
-                    onChangeCommitted={handleCommitChangeSize}
-                    valueLabelDisplay="on"
-                    step={50}
-                    marks
-                />
             </div>
         </div>
     );

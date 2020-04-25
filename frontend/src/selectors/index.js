@@ -14,6 +14,8 @@ const getTypeFilter = (state) => state.filters.type;
 //     }
 // );
 
+const filtersList = ['manufacturer', 'model', 'title', 'course'];
+
 const getVisibleListings = createSelector(
     [getListings, getTypeFilter],
     (listings, type) => {
@@ -29,28 +31,15 @@ export const getFilteredListings = createSelector(
     [getFilters, getVisibleListings],
     (filters, listings) => {
         return listings.filter((listing) => {
-            return (
-                (filters.category.length
-                    ? filters.category.includes(listing.category)
-                    : true) &&
-                (filters.varietal.length
-                    ? filters.varietal.includes(listing.varietal)
-                    : true) &&
-                (filters.country.length
-                    ? filters.country.includes(listing.country)
-                    : true) &&
-                (filters.winery.length
-                    ? filters.winery.includes(listing.winery)
-                    : true) &&
-                (filters.price.length
-                    ? listing.salePrice >= filters.price[0] &&
-                      listing.salePrice <= filters.price[1]
-                    : true) &&
-                (filters.size.length
-                    ? listing.size >= filters.size[0] &&
-                      listing.size <= filters.size[1]
-                    : true)
-            );
+            for (let filter of filtersList) {
+                if (
+                    filters[filter].length &&
+                    filters[filter].includes(listing[filter])
+                ) {
+                    return false;
+                }
+            }
+            return true;
         });
     }
 );
@@ -75,13 +64,7 @@ export const getAvailableFilters = createSelector(
         const availableFilters = {};
         if (type) {
             products.forEach((product) => {
-                [
-                    'category',
-                    'varietal',
-                    'country',
-                    'winery',
-                    'producer',
-                ].forEach((property) => {
+                filtersList.forEach((property) => {
                     addToDictionary(property, availableFilters, product);
                 });
             });

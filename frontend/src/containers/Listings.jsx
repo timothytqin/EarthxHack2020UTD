@@ -1,18 +1,18 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Filter from '../components/Filter';
-import products from '../css/products.module.css';
-import ProductCard from '../components/ListingCard';
+import styles from '../css/listings.module.css';
+import ListingCard from '../components/ListingCard';
 import { getFilteredListings } from '../selectors';
 
 const Products = (props) => {
-    const liquors = useSelector((state) => getFilteredListings(state));
+    const listings = useSelector((state) => getFilteredListings(state));
     return (
-        <div className={products.bg}>
+        <div className={styles.bg}>
             <Filter />
-            <main className={products.grid}>
-                {liquors.map((item) => {
-                    return <ProductCard product={item} key={item.id} />;
+            <main className={styles.grid}>
+                {listings.map((item) => {
+                    return <ListingCard listing={item} key={item.id} />;
                 })}
             </main>
         </div>
