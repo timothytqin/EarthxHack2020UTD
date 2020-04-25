@@ -13,9 +13,14 @@ const {
   updateListing,
   deleteListing
 } = require("./handlers/listing");
-const { createRequest, deleteRequest } = require("./handlers/request");
+const {
+  getRequests,
+  createRequest,
+  deleteRequest
+} = require("./handlers/request");
 const {
   createChatRoom,
+  getChatMessages,
   createChatMessage,
   deleteChatMessage
 } = require("./handlers/chat");
@@ -36,10 +41,12 @@ app.post("/listing/:listingId", FBAuth, updateListing);
 app.delete("/listing/:listingId", FBAuth, deleteListing);
 
 // Request routes
+app.get("/request", FBAuth, getRequests);
 app.post("/request", FBAuth, createRequest);
 app.delete("/request/:requestId", FBAuth, deleteRequest);
 
 // Chat routes
+app.get("/chat/:chatId", FBAuth, getChatMessages);
 app.post("/chat", FBAuth, createChatRoom);
 app.post("/chat/:chatId", FBAuth, createChatMessage);
 app.delete("/chat/:chatId/:messageId", FBAuth, deleteChatMessage);

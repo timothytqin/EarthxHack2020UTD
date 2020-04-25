@@ -17,6 +17,32 @@ exports.createChatRoom = (req, res) => {
     });
 };
 
+exports.getChatMessages = (req, res) => {
+  db.doc(`/chatrooms/${req.params.chatId}`)
+    .get()
+    .then(doc => {
+      if (!doc.exists) return res.status(404).json({ error: "Chat not found" });
+      if (!doc.data().members.includes(req.user.username))
+        return res.status(401).json({ error: "Unauthorized" });
+      return db
+        .collection("messages")
+        .where("chatId", "==", req.params.chatId)
+        .orderBy("createdAt", "desc")
+        .get();
+    })
+    .then(data => {
+      let chatMessages = [];
+      data.forEach(doc => {
+        chatMessages.push(doc.data());
+      });
+      return res.json(chatMessages);
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+};
+
 exports.createChatMessage = (req, res) => {
   const newChatMessage = {
     chatId: req.params.chatId,

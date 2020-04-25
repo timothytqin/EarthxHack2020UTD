@@ -36,6 +36,18 @@ exports.getAuthenticatedUser = (req, res) => {
         userData.listings.push(doc.data());
       });
       return db
+        .collection(`chatrooms`)
+        .where("members", "array-contains", req.user.username)
+        .get();
+    })
+    .then(data => {
+      userData.chatrooms = [];
+      data.forEach(doc => {
+        const chatRoom = doc.data();
+        chatRoom.chatroomId = doc.id;
+        userData.chatrooms.push(chatRoom);
+      });
+      return db
         .collection(`notifications`)
         .where("recipient", "==", req.user.username)
         .limit(10)

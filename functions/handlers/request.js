@@ -1,5 +1,24 @@
 const { db } = require("../util/admin");
 
+exports.getRequests = (req, res) => {
+  db.collection("requests")
+    .where("username", "==", req.user.username)
+    .get()
+    .then(doc => {
+      if (doc.size === 0)
+        return res.status(404).json({ error: "Requests not found" });
+      let requests = [];
+      doc.forEach(doc => {
+        requests.push(doc.data());
+      });
+      return res.json(requests);
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+};
+
 exports.createRequest = (req, res) => {
   const newRequest = {
     listingId: req.body.listingId,
