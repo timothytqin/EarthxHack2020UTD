@@ -84,8 +84,11 @@ exports.updateListing = (req, res) => {
         return res.status(403).json({ error: "Unauthorized" });
       }
       return document.update({
-        ...req.body,
-        listingImage: doc.data().body.listingImage
+        ...doc.data(),
+        body: {
+          ...req.body,
+          listingImage: doc.data().body.listingImage
+        }
       });
     })
     .then(() => {
