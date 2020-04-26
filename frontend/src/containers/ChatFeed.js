@@ -2,14 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { messagesdb } from '../firebase';
 import { useSelector } from 'react-redux';
-import { Card } from '@material-ui/core';
+import { Card, Grid, Button, TextField } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
+import SendIcon from '@material-ui/icons/Send';
 
-export default function ChatList(props) {
-    const { chatId } = useParams();
+import { sendMessage } from '../api/chat';
+
+export default function ChatFeed(props) {
+    const classes = useTheme();
+    const { id } = useParams();
     const [messages, setMessages] = useState([]);
+    const [text, setText] = useState();
     useEffect(() => {
-        if (chatId) {
-            let getChatMessages = messagesdb.where('chatId', '==', chatId);
+        if (id) {
+            let getChatMessages = messagesdb.where('chatId', '==', id);
             getChatMessages.onSnapshot((querySnapshot) => {
                 console.log(querySnapshot);
                 querySnapshot.forEach((message) => {
@@ -28,13 +34,43 @@ export default function ChatList(props) {
                 });
             });
         }
-    }, [chatId]);
+    }, [id]);
+
+    const submitMessage = (message) => {
+        sendMessage(message, id).then(() => setText(''));
+    };
 
     return (
-        <div>
-            {messages.map((message) => {
-                return <Card>message</Card>;
-            })}
-        </div>
+        <Grid container maxHeight>
+            <Grid item container>
+                <Grid item sm={3} />
+                <Grid item sm={6}>
+                    {messages.map((message) => {
+                        return <p>{message.message}</p>;
+                    })}
+                </Grid>
+                <Grid item sm={3} />
+            </Grid>
+            <Grid item container direction="row">
+                <TextField
+                    id="message"
+                    name="message"
+                    type="text"
+                    label="Type message here..."
+                    style={classes.textField}
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    fullWidth
+                />
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    onClick={() => submitMessage(text)}
+                >
+                    <SendIcon />
+                </Button>
+            </Grid>
+        </Grid>
     );
 }
