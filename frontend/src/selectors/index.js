@@ -76,3 +76,18 @@ export const getAvailableFilters = createSelector(
 export const getListing = (state, id) => {
     return state.listings.find((listing) => listing.listingId === id);
 };
+
+const getNotifications = (state) => state.user.notifications;
+
+export const getNumNotifications = createSelector(
+    [getNotifications],
+    (notifications) => {
+        let result = 0;
+        notifications.forEach((notification) => {
+            if (!notification.read) {
+                result++;
+            }
+        });
+        return result;
+    }
+);
