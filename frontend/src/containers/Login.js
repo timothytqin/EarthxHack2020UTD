@@ -9,6 +9,9 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { useTheme } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
+import { showLoading, hideLoading } from 'react-redux-loading-bar';
+import { receiveCredentials } from '../actions/receiveCredentials';
 
 // Redux stuff
 
@@ -17,6 +20,7 @@ export default function Login(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
+    const dispatch = useDispatch();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -24,6 +28,7 @@ export default function Login(props) {
             email,
             password,
         };
+        dispatch(showLoading());
         axios
             .post('/login', userData)
             .then((res) => {
@@ -34,7 +39,8 @@ export default function Login(props) {
             })
             .then(() => {
                 axios.get('/user').then((res) => {
-                    console.log(JSON.stringify(res.data, null, 2));
+                    dispatch(receiveCredentials(res.data));
+                    dispatch(hideLoading());
                 });
             })
             .catch((err) => setErrors(err));
