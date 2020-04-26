@@ -82,16 +82,16 @@ exports.createNotificationOnCreateRequest = functions.firestore
       });
   });
 
-exports.deleteNotificationOnDeleteRequest = functions.firestore
-  .document("requests/{requestId}")
-  .onDelete(snapshot => {
-    return db
-      .doc(`/notifications/${snapshot.id}`)
-      .delete()
-      .catch(err => {
-        console.error(err);
-      });
-  });
+ exports.deleteNotificationOnDeleteRequest = functions.firestore
+   .document("requests/{requestId}")
+   .onDelete(snapshot => {
+     return db
+       .doc(`/notifications/${snapshot.id}`)
+       .delete()
+       .catch(err => {
+         console.error(err);
+       });
+   });
 
 exports.createNotificationOnCreateChatMessage = functions.firestore
   .document("messages/{messageId}")

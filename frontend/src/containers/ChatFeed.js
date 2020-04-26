@@ -13,6 +13,7 @@ export default function ChatFeed(props) {
     const { id } = useParams();
     const [messages, setMessages] = useState([]);
     const [text, setText] = useState();
+    const username = useSelector((state) => state.user.credentials.username);
     useEffect(() => {
         if (id) {
             let getChatMessages = messagesdb.where('chatId', '==', id);
@@ -41,9 +42,27 @@ export default function ChatFeed(props) {
     };
 
     return (
-        <div style={{ maxWidth: '30rem', margin: 'auto', marginTop: '2rem' }}>
+        <div
+            style={{
+                backgroundColor: 'white',
+                padding: '3rem',
+                borderRadius: '2rem',
+                maxWidth: '30rem',
+                margin: 'auto',
+                marginTop: '5rem',
+            }}
+        >
             {messages.map((message) => {
-                return <p style={{ textAlign: 'right' }}>{message.message}</p>;
+                return (
+                    <p
+                        style={{
+                            textAlign:
+                                message.sender === username ? 'right' : 'left',
+                        }}
+                    >
+                        {message.message}
+                    </p>
+                );
             })}
             <Grid item container direction="row">
                 <TextField
