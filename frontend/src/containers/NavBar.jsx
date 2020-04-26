@@ -1,5 +1,5 @@
 import { UTD_LOGO } from "../css/images";
-import { logout } from "../api/auth";
+import { getCredentials, logout } from "../api/auth";
 
 import React, { useEffect } from "react";
 import LoadingBar from "react-redux-loading-bar";
@@ -23,12 +23,11 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Container, Link } from "@material-ui/core";
 
 import { useDispatch } from "react-redux";
-import { fetchListings } from "./actions/fetchListings";
+import { fetchListings } from "../actions/fetchListings";
 
 import { showLoading, hideLoading } from "react-redux-loading-bar";
 
-import { receiveCredentials } from "./actions/receiveCredentials";
-import { getCredentials } from "./api/auth";
+import { receiveCredentials } from "../actions/receiveCredentials";
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -94,7 +93,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function NavBar() {
+export default function NavBar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -188,10 +187,11 @@ export default function NavBar() {
         })
         .catch(err => {
           console.log(err);
-          window.location.href = "/login";
+          logout();
+          props.history.push("/login");
         });
     } else {
-      window.location.href = "/login";
+      props.history.push("/login");
     }
   }, []);
 

@@ -27,7 +27,7 @@ ReactDOM.render(
   <MuiThemeProvider theme={theme}>
     <Provider store={store}>
       <Router>
-        <NavBar />
+        <Route path="/" component={NavBar} />
         <Switch>
           <Route exact path="/" component={Landing} />
           <Route exact path="/listings" component={Listings} />
