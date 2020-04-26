@@ -52,7 +52,7 @@ export default function Signup(props) {
         <Typography variant="h2" style={classes.pageTitle}>
           Sign Up
         </Typography>
-        <form noValidate onSubmit={handleSubmit}>
+        <form noValidate onSubmit={handleSubmit} style={{ padding: "1em" }}>
           <TextField
             id="email"
             name="email"

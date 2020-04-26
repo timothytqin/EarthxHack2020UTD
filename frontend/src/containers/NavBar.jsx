@@ -1,7 +1,7 @@
 import { UTD_LOGO } from "../css/images";
 import { getCredentials, logout } from "../api/auth";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import LoadingBar from "react-redux-loading-bar";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -20,9 +20,10 @@ import ChatIcon from "@material-ui/icons/Chat";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import { Container, Link } from "@material-ui/core";
-
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchListings } from "../actions/fetchListings";
 
 import { showLoading, hideLoading } from "react-redux-loading-bar";
@@ -100,6 +101,11 @@ export default function NavBar(props) {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const username = useSelector(state => state.user.credentials.username);
+  const [authenticated, setAuthenticated] = useState(
+    localStorage.getItem("FBIdToken")
+  );
 
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
@@ -196,9 +202,9 @@ export default function NavBar(props) {
             props.history.push("/login");
           });
       } else {
-        console.log("NO CACHE");
         props.history.push("/login");
       }
+      setAuthenticated(localStorage.getItem("FBIdToken"));
     }
   });
 
@@ -217,7 +223,7 @@ export default function NavBar(props) {
               Rentech
             </Typography>
           </IconButton>
-          <div className={classes.search}>
+          {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -229,48 +235,78 @@ export default function NavBar(props) {
               }}
               inputProps={{ "aria-label": "search" }}
             />
-          </div>
+          </div> */}
           <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <IconButton aria-label="dashboard" color="inherit" href="/listings">
-              <DashboardIcon />
-            </IconButton>
-            <IconButton aria-label="dms" color="inherit" href="/chat">
-              <Badge badgeContent={69} color="secondary">
-                <ChatIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              aria-label="notifications"
-              color="inherit"
-              href="/notifications"
-            >
-              <Badge badgeContent={69} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              aria-label="logout"
-              color="inherit"
-              href="/login"
-              onClick={() => logout()}
-            >
-              <Badge badgeContent={69} color="secondary">
+          {/* <div className={classes.sectionDesktop}> */}
+          {authenticated && authenticated[0] ? (
+            <div>
+              <IconButton
+                aria-label="dashboard"
+                color="inherit"
+                href="/listings"
+              >
+                <DashboardIcon />
+              </IconButton>
+              <IconButton aria-label="dms" color="inherit" href="/chat">
+                <Badge badgeContent={69} color="secondary">
+                  <ChatIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                aria-label="notifications"
+                color="inherit"
+                href="/notifications"
+              >
+                <Badge badgeContent={69} color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+
+              <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                href={`/u/${username}`}
+                // onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <IconButton
+                aria-label="logout"
+                color="inherit"
+                href="/login"
+                onClick={() => logout()}
+              >
                 <ExitToAppIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
+              </IconButton>
+            </div>
+          ) : (
+            <div>
+              <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                color="inherit"
+                href="/login"
+              >
+                <VpnKeyIcon />
+                <Typography variant={"h5"} style={{ marginLeft: ".2em" }}>
+                  Log In
+                </Typography>
+              </IconButton>
+              <IconButton aria-label="logout" color="inherit" href="/signup">
+                <PersonAddIcon />
+                <Typography variant={"h5"} style={{ marginLeft: ".2em" }}>
+                  Sign Up
+                </Typography>
+              </IconButton>
+            </div>
+          )}
+
+          {/* <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
               aria-controls={mobileMenuId}
@@ -280,11 +316,11 @@ export default function NavBar(props) {
             >
               <MoreIcon />
             </IconButton>
-          </div>
+          </div> */}
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
+      {/* {renderMobileMenu} */}
+      {/* {renderMenu} */}
     </div>
   );
 }

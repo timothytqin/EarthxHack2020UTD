@@ -48,7 +48,7 @@ export default function Login(props) {
         <Typography variant="h2" style={classes.pageTitle}>
           Login
         </Typography>
-        <form noValidate onSubmit={handleSubmit}>
+        <form noValidate onSubmit={handleSubmit} style={{ padding: "1em" }}>
           <TextField
             id="email"
             name="email"

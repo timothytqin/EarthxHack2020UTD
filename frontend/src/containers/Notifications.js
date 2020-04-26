@@ -9,17 +9,16 @@ const Notifications = props => {
   return (
     <>
       {notifications && (
-        <div className={styles.bg}>
-          <main className={styles.grid}>
-            {notifications.map(item => {
-              return (
-                <NotificationCard
-                  notification={item}
-                  key={item.notificationId}
-                />
-              );
-            })}
-          </main>
+        <div>
+          {/* <div className={styles.bg}>
+          <main className={styles.grid}> */}
+          {notifications.map(item => {
+            return (
+              <NotificationCard notification={item} key={item.notificationId} />
+            );
+          })}
+          {/* </main>
+        </div> */}
         </div>
       )}
     </>

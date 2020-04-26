@@ -8,27 +8,34 @@ import {
   CardMedia,
   CardContent,
   Typography,
-  CardActions
+  CardActions,
+  Grid
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
 const NotificationCard = ({ notification }) => {
   return (
-    <Card>
-      <Link
-        to={`/app/${notification.body.listingId}`}
-        style={{ color: "inherit", textDecoration: "inherit" }}
-      >
-        <CardActionArea>
-          <CardMedia image={notification.userImage} />
-          <CardContent>
-            <Typography variant="h5" color="primary">
-              {notification.username} is interested in your listing
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Link>
-    </Card>
+    <Grid container>
+      <Grid item sm={3} />
+      <Grid item sm={6} xs={12}>
+        <Card>
+          <Link
+            to={`/listings/${notification.body.listingId}`}
+            style={{ color: "inherit", textDecoration: "inherit" }}
+          >
+            <CardActionArea style={{ flexDirection: "row" }}>
+              <CardMedia image={notification.userImage} />
+              <CardContent>
+                <Typography variant="h5" color="primary">
+                  {notification.username} is interested in your listing
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Link>
+        </Card>
+      </Grid>
+      <Grid item sm={3} />
+    </Grid>
   );
 };
 

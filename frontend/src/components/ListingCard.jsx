@@ -51,7 +51,9 @@ const ListingCard = ({ listing }) => {
             <Typography variant="h5" color="primary">
               {listing.body.title}
             </Typography>
-            <Typography variant="subtitle1">{listing.username}</Typography>
+            <Link to={`/u/${listing.username}`}>
+              <Typography variant="subtitle1">{listing.username}</Typography>
+            </Link>
             <Typography variant="h6">
               {`${listing.body.distance} km`}
             </Typography>

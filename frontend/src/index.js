@@ -12,6 +12,7 @@ import Login from "./containers/Login";
 import Signup from "./containers/Signup";
 import ChatList from "./containers/ChatList";
 import Notifications from "./containers/Notifications";
+import Profile from "./containers/Profile";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
@@ -36,6 +37,7 @@ ReactDOM.render(
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/chat" component={ChatList} />
           <Route exact path="/notifications" component={Notifications} />
+          <Route exact path="/u/:username" component={Profile} />
         </Switch>
       </Router>
     </Provider>
