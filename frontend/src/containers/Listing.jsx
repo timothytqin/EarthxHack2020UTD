@@ -1,73 +1,114 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { getListing } from "../selectors";
-import product from "../css/product.module.css";
-import { Card, Button, makeStyles } from "@material-ui/core";
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { getListing } from '../selectors';
+import product from '../css/product.module.css';
+import { Card, Button, makeStyles, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
-  root: {
-    background: "var(--bg-gradient)",
-    padding: "1rem",
-    gridArea: "img",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  button: {
-    width: "100%",
-    background: "var(--gold-gradient)",
-    color: "var(--bg-color)",
-    fontWeight: "700",
-    marginTop: "1rem"
-  }
+    root: {
+        background: 'var(--bg-gradient)',
+        padding: '1rem',
+        gridArea: 'img',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
-const Listing = props => {
-  const { id } = useParams();
-  const [listing, setListing] = React.useState(
-    useSelector(state => getListing(state, id))
-  );
-  const classes = useStyles();
+const Listing = (props) => {
+    const { id } = useParams();
+    const [listing, setListing] = React.useState(
+        useSelector((state) => getListing(state, id))
+    );
+    const classes = useStyles();
 
-  return (
-    <>
-      {listing && (
-        <div className={product.bg}>
-          <Card className={classes.root}>
-            <img
-              className={product.img}
-              src={listing.body.listingImage}
-              alt={`product id: ${id}`}
-            />
-          </Card>
-          <div className={product.title_container}></div>
-          <div className={product.action_container}>
-            <span className={product.price}>{listing.body.title}</span>
-            <Button className={classes.button}>Request</Button>
-          </div>
-          <div className={product.details_container}>
-            {listing.body.type && (
-              <div className={product.details_row}>
-                <div className={product.details_label}>type</div>
-                <div className={product.details_text}>{listing.body.type}</div>
-              </div>
-            )}
-            {listing.body &&
-              Object.keys(listing.body).map(key => {
-                return (
-                  <div className={product.details_row}>
-                    <div className={product.details_label}>{key}</div>
-                    <div className={product.details_text}>
-                      {listing.body[key]}
+    const view = listing && (
+        <div classNambe={product.bg}>
+            <Card className={classes.root}>
+                <img
+                    className={product.img}
+                    src={listing.body.listingImage}
+                    alt={`product id: ${id}`}
+                />
+            </Card>
+            <div className={product.title_container}>
+                <Typography color="primary" variant="h4">
+                    {listing.body.title}
+                </Typography>
+            </div>
+            <div className={product.action_container}>
+                <Button color="secondary">Request</Button>
+            </div>
+            <div className={product.details_container}>
+                {listing.body.type && (
+                    <div className={product.details_row}>
+                        <div className={product.details_label}>type</div>
+                        <div className={product.details_text}>
+                            {listing.body.type}
+                        </div>
                     </div>
-                  </div>
-                );
-              })}
-          </div>
+                )}
+                {listing.body &&
+                    Object.keys(listing.body).map((key) => {
+                        return (
+                            <div className={product.details_row}>
+                                <div className={product.details_label}>
+                                    {key}
+                                </div>
+                                <div className={product.details_text}>
+                                    {listing.body[key]}
+                                </div>
+                            </div>
+                        );
+                    })}
+            </div>
         </div>
-      )}
-    </>
-  );
+    );
+
+    const edit = listing && (
+        <div className={product.bg}>
+            <Card className={classes.root}>
+                <img
+                    className={product.img}
+                    src={listing.listingImage}
+                    alt={`product id: ${id}`}
+                />
+            </Card>
+            <div className={product.title_container}>
+                <Typography color="primary" variant="h4">
+                    {listing.title}
+                </Typography>
+            </div>
+            <div className={product.action_container}>
+                <Button color="secondary">Request</Button>
+            </div>
+            <div className={product.details_container}>
+                {listing.type && (
+                    <div className={product.details_row}>
+                        <div className={product.details_label}>type</div>
+                        <div className={product.details_text}>
+                            {listing.type}
+                        </div>
+                    </div>
+                )}
+                {listing.body &&
+                    Object.keys(listing.body).map((key) => {
+                        return (
+                            <div className={product.details_row}>
+                                <div className={product.details_label}>
+                                    {key}
+                                </div>
+                                <div className={product.details_text}>
+                                    {listing.body[key]}
+                                </div>
+                            </div>
+                        );
+                    })}
+            </div>
+        </div>
+    );
+
+    return <>{view}</>;
 };
 
 export default Listing;
