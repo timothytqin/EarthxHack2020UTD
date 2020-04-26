@@ -80,7 +80,7 @@ export const fetchListings = () => async (dispatch, getState) => {
             //   });
             listing.body.distance = distance;
             const url = await storage
-                .refFromURL(listing.body.listingImage)
+                .ref(listing.body.listingImage)
                 .getDownloadURL();
             listing.body.listingImage = url;
             listings.push(listing);

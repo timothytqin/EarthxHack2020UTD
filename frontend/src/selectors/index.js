@@ -21,7 +21,7 @@ const getVisibleListings = createSelector(
     (listings, type) => {
         let result = listings;
         if (type) {
-            result = result.filter((listing) => listing.type === type);
+            result = result.filter((listing) => listing.body.type === type);
         }
         return result;
     }
@@ -65,7 +65,7 @@ export const getAvailableFilters = createSelector(
         if (type) {
             products.forEach((product) => {
                 filtersList.forEach((property) => {
-                    addToDictionary(property, availableFilters, product);
+                    addToDictionary(property, availableFilters, product.body);
                 });
             });
         }
