@@ -5,7 +5,11 @@ const app = require("express")();
 const { db } = require("./util/admin");
 const FBAuth = require("./util/fbAuth");
 const { login, signup } = require("./handlers/auth");
-const { updateProfile, getAuthenticatedUser } = require("./handlers/users");
+const {
+  updateProfile,
+  getAuthenticatedUser,
+  getUser
+} = require("./handlers/users");
 const {
   getOpenListings,
   getListing,
@@ -30,6 +34,7 @@ app.post("/login", login);
 app.post("/signup", signup);
 
 // User routes
+app.get("/user/:username", FBAuth, getUser);
 app.get("/user", FBAuth, getAuthenticatedUser);
 app.post("/user/:username", FBAuth, updateProfile);
 

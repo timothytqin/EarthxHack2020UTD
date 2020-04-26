@@ -89,3 +89,32 @@ exports.getAuthenticatedUser = (req, res) => {
       return res.status(500).json({ error: err.code });
     });
 };
+
+exports.getUser = (req, res) => {
+  const username = req.params.username;
+  let userData = { username };
+  db.doc(`/users/${username}`)
+    .get()
+    .then(doc => {
+      userData.imageUrl = doc.data().imageUrl;
+      userData.createdAt = doc.data().createdAt;
+      return db
+        .collection("listings")
+        .where("username", "==", username)
+        .where("open", "==", true)
+        .get();
+    })
+    .then(data => {
+      userData.listings = [];
+      data.forEach(doc => {
+        let listing = doc.data();
+        listing.listingId = doc.id;
+        userData.listings.push(listing);
+      });
+      return res.json(userData);
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+};
