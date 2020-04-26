@@ -10,12 +10,12 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import DraggableFlatList from "react-native-draggable-flatlist";
 
-import store from "../../../store";
+import store from "../../../redux/store";
 import {
   addReminder,
   deleteReminder,
   loadReminders
-} from "../../../redux/actions";
+} from "../../../redux/actions/authActions";
 import { globalStyles, images } from "../../../styles/global";
 
 import Button from "../../../components/Button";

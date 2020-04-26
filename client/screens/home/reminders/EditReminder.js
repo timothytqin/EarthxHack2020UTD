@@ -13,8 +13,8 @@ import {
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-import store from "../../../store";
-import { addReminder, updateReminder } from "../../../redux/actions";
+import store from "../../../redux/store";
+import { addReminder, updateReminder } from "../../../redux/actions/authActions";
 import { globalStyles, images } from "../../../styles/global";
 
 import Button from "../../../components/Button";

@@ -10,11 +10,11 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import RNPickerSelect from "react-native-picker-select";
 
-import store from "../../store";
+import store from "../../redux/store";
 import { globalStyles } from "../../styles/global";
 import { constants } from "../../shared/constants";
 import { httpPostOptions } from "../../shared/http";
-import { updateMember } from "../../redux/actions";
+import { updateMember } from "../../redux/actions/authActions";
 import Button from "../../components/Button";
 import Toast from "react-native-tiny-toast";
 

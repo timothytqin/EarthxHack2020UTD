@@ -21,8 +21,8 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import Toast from "react-native-tiny-toast";
 
-import store from "../../../store";
-import { addEvent, updateEvent } from "../../../redux/actions";
+import store from "../../../redux/store";
+import { addEvent, updateEvent } from "../../../redux/actions/authActions";
 import { globalStyles, images } from "../../../styles/global";
 
 import Popup from "../../../components/Popup";

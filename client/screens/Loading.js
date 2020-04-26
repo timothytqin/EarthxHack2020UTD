@@ -1,22 +1,19 @@
-import React from "react";
-import { StyleSheet, View, Image, Text } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, View, Image, Text, ActivityIndicator } from "react-native";
+import { useSelector } from "react-redux";
 
-import store from "../store";
+import store from "../redux/store";
 import { images } from "../styles/global";
 
 export default function Loading({ route, navigation }) {
-  navigation.navigate(
-    !store.getState().reducer.authenticated ? "Login" : "App"
-  );
-  store.subscribe(() => {
-    navigation.navigate(
-      !store.getState().reducer.authenticated ? "Login" : "App"
-    );
-  });
+  const authenticated = useSelector(state => state.auth.authenticated);
+  useEffect(() => {
+    navigation.navigate(authenticated ? "App" : "Login");
+  }, []);
 
   return (
     <View style={styles.loading}>
-      {/* <Image source={images.loading} resizeMode="contain" /> */}
+      <ActivityIndicator size="large" />
       <Text>Loading...</Text>
     </View>
   );

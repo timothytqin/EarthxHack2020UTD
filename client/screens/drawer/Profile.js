@@ -16,8 +16,8 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import Toast from "react-native-tiny-toast";
 
-import store from "../../store";
-import { updateProfile } from "../../redux/actions";
+import store from "../../redux/store";
+import { updateProfile } from "../../redux/actions/authActions";
 import { globalStyles } from "../../styles/global";
 
 import Button from "../../components/Button";

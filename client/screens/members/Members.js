@@ -11,7 +11,7 @@ import {
 import { ListItem } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import store from "../../store";
+import store from "../../redux/store";
 import { globalStyles } from "../../styles/global";
 import { constants } from "../../shared/constants";
 import Collapsible from "../../components/Collapsible";

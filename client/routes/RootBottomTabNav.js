@@ -12,18 +12,18 @@ import Hours from "./HoursStack";
 import Members from "./MemberStack";
 import Status from "./StatusStack";
 
-import store from "../store";
+import store from "../redux/store";
 
 const Tab = createBottomTabNavigator();
 
-export default function HomeTabNavBar({ navigation, route }) {
-  const [position, setPosition] = useState(
-    store.getState().reducer.profile.position
-  );
+export default function RootBottomTabNavBar({ navigation, route }) {
+  // const [position, setPosition] = useState(
+  //   store.getState().reducer.profile.position
+  // );
 
-  store.subscribe(() => {
-    setPosition(store.getState().reducer.profile.position);
-  });
+  // store.subscribe(() => {
+  //   setPosition(store.getState().reducer.profile.position);
+  // });
 
   return (
     <Tab.Navigator initialRouteName="Home">
@@ -37,7 +37,7 @@ export default function HomeTabNavBar({ navigation, route }) {
           )
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Hours"
         component={Hours}
         options={{
@@ -71,7 +71,7 @@ export default function HomeTabNavBar({ navigation, route }) {
             )
           }}
         />
-      )}
+      )} */}
     </Tab.Navigator>
   );
 }

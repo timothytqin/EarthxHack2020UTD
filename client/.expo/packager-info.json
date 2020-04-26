@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerNgrokUrl": "https://qr-f2h.stevehan2001.client.exp.direct",
+  "packagerNgrokUrl": "https://packager.qr-f2h.stevehan2001.client.exp.direct",
+  "ngrokPid": 17578
 }
