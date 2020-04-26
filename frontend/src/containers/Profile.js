@@ -78,10 +78,12 @@ const Profile = () => {
                     <CardContent>
                         {profile.map((listing) => {
                             return (
-                                <ListingCard
+                                <div
                                     key={listing.id}
-                                    listing={listing}
-                                />
+                                    style={{ marginBottom: '1rem' }}
+                                >
+                                    <ListingCard listing={listing} />
+                                </div>
                             );
                         })}
                     </CardContent>

@@ -18,8 +18,9 @@ const Listings = (props) => {
                     style={{
                         margin: '1em 2.5em',
                         position: 'fixed',
-                        bottom: 0,
+                        bottom: 10,
                         right: 0,
+                        zIndex: 1000,
                     }}
                     href="/listings/create"
                 >
