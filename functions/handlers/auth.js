@@ -8,10 +8,7 @@ const { validateSignupData, validateLoginData } = require("../util/validators");
 exports.signup = (req, res) => {
   let token, userId;
   const newUser = {
-    email: req.body.email,
-    password: req.body.password,
-    confirmPassword: req.body.confirmPassword,
-    username: req.body.username
+    ...req.body
   };
 
   const { valid, errors } = validateSignupData(newUser);

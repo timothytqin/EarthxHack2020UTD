@@ -18,6 +18,10 @@ exports.validateSignupData = data => {
 
   if (isEmpty(data.username)) errors.username = "Must not be empty";
 
+  if (isEmpty(data.location)) errors.location = "Must not be empty";
+  if (!data.location.match(/\d{5}/g))
+    errors.location = "Must be valid zip code";
+
   return {
     errors,
     valid: Object.keys(errors).length === 0
