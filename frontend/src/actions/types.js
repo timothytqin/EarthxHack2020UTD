@@ -3,3 +3,4 @@ export const UPDATE_TYPE = 'UPDATE_TYPE';
 export const ADD_FILTER = 'ADD_FILTER';
 export const REMOVE_FILTER = 'REMOVE_FILTER';
 export const UPDATE_FILTER = 'UPDATE_FILTER';
+export const RECEIVE_CREDENTIALS = 'RECEIVE_CREDENTIALS';
