@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   withStyles,
@@ -8,27 +8,70 @@ import {
   CardMedia,
   CardContent,
   Typography,
-  CardActions
+  CardActions,
+  Grid
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { showLoading, hideLoading } from "react-redux-loading-bar";
 
-import { createRequest, removeRequest } from "../api/requests";
-import { addRequest, deleteRequest } from "../actions/editRequests";
+import ListingCard from "../components/ListingCard";
+import { storage } from "../firebase";
+
+import { getUserProfile } from "../api/user";
 
 const Profile = () => {
-  const user = useSelector(state => state.user.credentials);
+  const dispatch = useDispatch();
+  const { username } = useParams();
+  const [profile, setProfile] = useState(null);
+  const [pfp, setPfp] = useState(null);
+  useEffect(() => {
+    let listings = [];
+    dispatch(showLoading());
+    getUserProfile(username)
+      .then(async res => {
+        setPfp(res.data.imageUrl);
+        for (let listing of res.data.listings) {
+          let listingData = { ...listing };
+          listingData.body.listingImage = await storage
+            .ref(listing.body.listingImage)
+            .getDownloadURL();
+          listings.push(listingData);
+        }
+      })
+      .then(() => {
+        setProfile(listings);
+        dispatch(hideLoading());
+      });
+  }, [username]);
   return (
-    <Card>
-      <CardActionArea>
-        <CardMedia image={user.imageUrl} />
-        <CardContent>
-          <Typography variant="h5" color="primary">
-            {user.username}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <>
+      {profile && (
+        <Card>
+          <CardActionArea>
+            <CardMedia image={pfp} />
+            <CardContent>
+              <Typography variant="h5" color="primary">
+                {username}
+              </Typography>
+            </CardContent>
+            <CardContent>
+              {profile.map(listing => {
+                return (
+                  <Grid container>
+                    <Grid item sm={4} xs={3} />
+                    <Grid item sm={4} xs={6}>
+                      <ListingCard listing={listing} />
+                    </Grid>
+                    <Grid item sm={4} xs={3} />
+                  </Grid>
+                );
+              })}
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      )}
+    </>
   );
 };
 

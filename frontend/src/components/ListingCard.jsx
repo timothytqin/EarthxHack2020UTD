@@ -54,9 +54,13 @@ const ListingCard = ({ listing }) => {
             <Link to={`/u/${listing.username}`}>
               <Typography variant="subtitle1">{listing.username}</Typography>
             </Link>
-            <Typography variant="h6">
-              {`${listing.body.distance} km`}
-            </Typography>
+            {listing.body &&
+              listing.body.distance &&
+              listing.body.distance >= 0 && (
+                <Typography variant="h6">
+                  {`${listing.body.distance} mi`}
+                </Typography>
+              )}
           </CardContent>
         </CardActionArea>
       </Link>

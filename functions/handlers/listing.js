@@ -83,7 +83,10 @@ exports.updateListing = (req, res) => {
       if (doc.data().username !== req.user.username) {
         return res.status(403).json({ error: "Unauthorized" });
       }
-      return document.update(req.body);
+      return document.update({
+        ...req.body,
+        listingImage: doc.data().body.listingImage
+      });
     })
     .then(() => {
       return res.json({ message: "Listing updated successfully" });
