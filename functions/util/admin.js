@@ -3,7 +3,8 @@ const serviceKey = require("./serviceAccountKey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceKey),
-  databaseURL: "https://utdloanthrone.firebaseio.com"
+  databaseURL: "https://utdloanthrone.firebaseio.com",
+  storageBucket: "utdloanthrone.appspot.com"
 });
 
 const db = admin.firestore();

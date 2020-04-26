@@ -1,9 +1,7 @@
 const { db } = require("../util/admin");
 
-const { reduceUserDetails } = require("../util/validators");
-
 exports.updateProfile = (req, res) => {
-  let userDetails = reduceUserDetails(req.body);
+  let userDetails = req.body;
 
   db.doc(`/users/${req.params.username}`)
     .update(userDetails)

@@ -1,6 +1,8 @@
 import axios from "axios";
 import { RECEIVE_LISTINGS } from "./types";
 import { showLoading, hideLoading } from "react-redux-loading-bar";
+import { ZIP_CODE_API_KEY } from "../config/keys";
+import { storage } from "firebase";
 
 const receiveListings = data => {
   return {
@@ -8,7 +10,7 @@ const receiveListings = data => {
     payload: data
   };
 };
-export const fetchListings = () => async dispatch => {
+export const fetchListings = () => async (dispatch, getState) => {
   dispatch(showLoading());
 
   // liquors.get().then(async (snapshot) => {
@@ -58,9 +60,27 @@ export const fetchListings = () => async dispatch => {
 
   const token = localStorage.getItem("FBIdToken");
   axios.defaults.headers.common["Authorization"] = token;
-  axios.get("/listing").then(res => {
-    // console.log(JSON.stringify(res.data, null, 2));
-    dispatch(receiveListings(res.data));
+  axios.get("/listing").then(async res => {
+    const listings = [];
+    for (let listing of res.data) {
+      let distance;
+      console.log(getState());
+      await axios
+        .get(
+          `https://www.zipcodeapi.com/rest/${ZIP_CODE_API_KEY}/distance.json/${
+            listing.location
+          }/${75024}/mi`
+        )
+        .then(res => res.json())
+        .then(res => (distance = res.distance))
+        .catch(err => {
+          console.error(err);
+          distance = -1;
+        });
+      listing.body.distance = distance;
+      listings.push(listing);
+    }
+    dispatch(receiveListings(listings));
   }); // TODO
   dispatch(hideLoading());
 };

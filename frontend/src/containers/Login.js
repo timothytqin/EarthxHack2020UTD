@@ -35,7 +35,7 @@ export default function Login(props) {
                 const token = `Bearer ${res.data.token}`;
                 localStorage.setItem('FBIdToken', token);
                 axios.defaults.headers.common['Authorization'] = token;
-                props.history.push('/listings');
+                props.history.push('/notifications');
             })
             .then(() => {
                 axios.get('/user').then((res) => {
