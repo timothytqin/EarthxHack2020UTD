@@ -176,7 +176,10 @@ export default function NavBar(props) {
   );
   const dispatch = useDispatch();
   useEffect(() => {
-    if (props.location.pathname !== "/signup") {
+    if (
+      props.location.pathname !== "/signup" &&
+      props.location.pathname !== "/login"
+    ) {
       dispatch(showLoading());
       const cachedToken = localStorage.getItem("FBIdToken");
       if (cachedToken) {

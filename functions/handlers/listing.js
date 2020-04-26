@@ -80,8 +80,9 @@ exports.updateListing = (req, res) => {
     .then(doc => {
       if (!doc.exists)
         return res.status(404).json({ error: "Listing not found" });
-      if (doc.data().username === req.user.username)
+      if (doc.data().username !== req.user.username) {
         return res.status(403).json({ error: "Unauthorized" });
+      }
       return document.update(req.body);
     })
     .then(() => {

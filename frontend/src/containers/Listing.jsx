@@ -18,7 +18,8 @@ import {
   InputLabel
 } from "@material-ui/core";
 
-import { createRequest } from "../api/requests";
+import { createRequest, removeRequest } from "../api/requests";
+import { addRequest, deleteRequest } from "../actions/editRequests";
 
 const useStyles = makeStyles({
   root: {
@@ -53,10 +54,11 @@ const textbookTemplate = {
 const Listing = props => {
   const { id } = useParams();
   const reduxListing = useSelector(state => getListing(state, id));
-
+  const reduxRequests = useSelector(state => state.user.requests);
   // react state
   const [listing, setListing] = React.useState();
   const [mode, setMode] = React.useState("view");
+  const [request, setRequest] = React.useState();
 
   const username = useSelector(state => state.user.credentials.username);
   const dispatch = useDispatch();
@@ -64,6 +66,10 @@ const Listing = props => {
   React.useEffect(() => {
     setListing(reduxListing);
   }, [reduxListing]);
+
+  React.useEffect(() => {
+    setRequest(reduxRequests);
+  }, [reduxRequests]);
 
   React.useEffect(() => {
     if (id === "create") {
@@ -76,7 +82,15 @@ const Listing = props => {
   console.log(username);
 
   const handleRequest = () => {
-    //   createRequest(listing);
+    if (!request.includes(listing.listingId))
+      createRequest(listing.listingId).then(res => {
+        dispatch(addRequest(listing.listingId));
+      });
+    else {
+      removeRequest(listing.listingId).then(() => {
+        dispatch(deleteRequest(listing.listingId));
+      });
+    }
     console.log(listing);
   };
   const handleConfirmEdit = () => {
@@ -156,17 +170,28 @@ const Listing = props => {
                 {listing.body.title}
               </Typography>
             </div>
-            {mode === "view" && (
-              <div className={product.action_container}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={handleRequest}
-                >
-                  Request
-                </Button>
-              </div>
-            )}
+            {mode === "view" &&
+              (request.includes(listing.listingId) ? (
+                <div className={product.action_container}>
+                  <Button
+                    variant="contained"
+                    color="#ddd"
+                    onClick={handleRequest}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              ) : (
+                <div className={product.action_container}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleRequest}
+                  >
+                    Request
+                  </Button>
+                </div>
+              ))}
             <div className={product.details_container}>
               {listing.body &&
                 Object.keys(listing.body).map(key => {

@@ -1,4 +1,8 @@
-import { RECEIVE_CREDENTIALS } from "../actions/types";
+import {
+  RECEIVE_CREDENTIALS,
+  ADD_REQUEST,
+  DELETE_REQUEST
+} from "../actions/types";
 import { combineReducers } from "redux";
 
 const credentials = (state = {}, action) => {
@@ -28,8 +32,23 @@ const notifications = (state = [], action) => {
   }
 };
 
+const requests = (state = [], action) => {
+  switch (action.type) {
+    case RECEIVE_CREDENTIALS:
+      return action.payload.requests;
+    case ADD_REQUEST:
+      console.log([...state, action.payload]);
+      return [...state, action.payload];
+    case DELETE_REQUEST:
+      return state.filter(item => item !== action.payload);
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   credentials,
   listings,
-  notifications
+  notifications,
+  requests
 });

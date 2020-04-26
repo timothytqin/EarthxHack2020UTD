@@ -7,7 +7,6 @@ import { getFilteredListings } from "../selectors";
 
 const Listings = props => {
   const listings = useSelector(state => getFilteredListings(state));
-  console.log("LISTINGCARD: " + JSON.stringify(listings));
   return (
     <div className={styles.bg}>
       <Filter />
