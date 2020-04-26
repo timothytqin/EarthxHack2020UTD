@@ -36,23 +36,24 @@ export default function ChatFeed() {
     }, [username]);
 
     return (
-        <Grid container spacing={2}>
-            <Grid item sm={3} />
-            <Grid item sm={6} xs={12}>
-                {chatrooms.map((chatroom) => {
-                    console.log(chatroom);
-                    return (
-                        <ChatroomCard
-                            title={
-                                chatroom.members[0] + ', ' + chatroom.members[1]
-                            }
-                            chatId={chatroom.id}
-                            key={chatroom.id}
-                        />
-                    );
-                })}
-            </Grid>
-            <Grid item sm={3} />
-        </Grid>
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                maxWidth: '30rem',
+                margin: 'auto',
+                marginTop: '2rem',
+            }}
+        >
+            {chatrooms.map((chatroom) => {
+                return (
+                    <ChatroomCard
+                        title={chatroom.members[0] + ', ' + chatroom.members[1]}
+                        chatId={chatroom.id}
+                        key={chatroom.id}
+                    />
+                );
+            })}
+        </div>
     );
 }
