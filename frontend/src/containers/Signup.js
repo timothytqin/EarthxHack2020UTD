@@ -41,7 +41,7 @@ export default function Signup(props) {
       getCredentials().then(res => {
         dispatch(receiveCredentials(res.data));
         dispatch(hideLoading());
-        props.history.push("/");
+        props.history.push("/listings");
       });
     });
   };
