@@ -59,7 +59,7 @@ export const fetchListings = () => async dispatch => {
   const token = localStorage.getItem("FBIdToken");
   axios.defaults.headers.common["Authorization"] = token;
   axios.get("/listing").then(res => {
-    console.log(JSON.stringify(res.data));
+    // console.log(JSON.stringify(res.data, null, 2));
     dispatch(receiveListings(res.data));
   }); // TODO
   dispatch(hideLoading());

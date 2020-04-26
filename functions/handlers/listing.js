@@ -18,7 +18,8 @@ exports.getOpenListings = (req, res) => {
       console.error(err);
       return res.status(500).json({ error: err.code });
     });
-};``
+};
+``;
 
 exports.getListing = (req, res) => {
   let listingData = {};
@@ -54,6 +55,7 @@ exports.createListing = (req, res) => {
     body: { ...req.body },
     username: req.user.username,
     userImage: req.user.imageUrl,
+    location: req.user.location,
     createdAt: new Date().toISOString(),
     open: true
   };

@@ -27,7 +27,6 @@ const Listing = props => {
   const [listing, setListing] = React.useState(
     useSelector(state => getListing(state, id))
   );
-  console.log(listing);
   const classes = useStyles();
 
   return (
@@ -37,20 +36,20 @@ const Listing = props => {
           <Card className={classes.root}>
             <img
               className={product.img}
-              src={listing.listingImage}
+              src={listing.body.listingImage}
               alt={`product id: ${id}`}
             />
           </Card>
           <div className={product.title_container}></div>
           <div className={product.action_container}>
-            <span className={product.price}>{listing.title}</span>
+            <span className={product.price}>{listing.body.title}</span>
             <Button className={classes.button}>Request</Button>
           </div>
           <div className={product.details_container}>
-            {listing.type && (
+            {listing.body.type && (
               <div className={product.details_row}>
                 <div className={product.details_label}>type</div>
-                <div className={product.details_text}>{listing.type}</div>
+                <div className={product.details_text}>{listing.body.type}</div>
               </div>
             )}
             {listing.body &&
