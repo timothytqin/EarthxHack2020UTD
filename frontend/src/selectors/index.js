@@ -34,7 +34,7 @@ export const getFilteredListings = createSelector(
             for (let filter of filtersList) {
                 if (
                     filters[filter].length &&
-                    filters[filter].includes(listing[filter])
+                    filters[filter].includes(listing.body[filter])
                 ) {
                     return false;
                 }

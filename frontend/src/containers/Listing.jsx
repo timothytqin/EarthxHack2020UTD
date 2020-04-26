@@ -168,6 +168,7 @@ const Listing = (props) => {
                                 if (
                                     key === 'type' ||
                                     key === 'listingImage' ||
+                                    key === 'distance' ||
                                     (mode === 'view' && key === 'title')
                                 ) {
                                     return null;
