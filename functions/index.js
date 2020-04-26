@@ -30,31 +30,31 @@ const {
 } = require("./handlers/chat");
 
 // Auth routes
-app.post("/login", login);
-app.post("/signup", signup);
+app.post("/api/login", login);
+app.post("/api/signup", signup);
 
 // User routes
-app.get("/user/:username", FBAuth, getUser);
-app.get("/user", FBAuth, getAuthenticatedUser);
-app.post("/user/:username", FBAuth, updateProfile);
+app.get("/api/user/:username", FBAuth, getUser);
+app.get("/api/user", FBAuth, getAuthenticatedUser);
+app.post("/api/user/:username", FBAuth, updateProfile);
 
 // Listing routes
-app.get("/listing", FBAuth, getOpenListings);
-app.get("/listing/:listingId", FBAuth, getListing);
-app.post("/listing", FBAuth, createListing);
-app.post("/listing/:listingId", FBAuth, updateListing);
-app.delete("/listing/:listingId", FBAuth, deleteListing);
+app.get("/api/listing", FBAuth, getOpenListings);
+app.get("/api/listing/:listingId", FBAuth, getListing);
+app.post("/api/listing", FBAuth, createListing);
+app.post("/api/listing/:listingId", FBAuth, updateListing);
+app.delete("/api/listing/:listingId", FBAuth, deleteListing);
 
 // Request routes
-app.get("/request", FBAuth, getRequests);
-app.post("/request", FBAuth, createRequest);
-app.delete("/request/:listingId", FBAuth, deleteRequest);
+app.get("/api/request", FBAuth, getRequests);
+app.post("/api/request", FBAuth, createRequest);
+app.delete("/api/request/:listingId", FBAuth, deleteRequest);
 
 // Chat routes
-app.get("/chat/:chatId", FBAuth, getChatMessages);
-app.post("/chat", FBAuth, createChatRoom);
-app.post("/chat/:chatId", FBAuth, createChatMessage);
-app.delete("/chat/:chatId/:messageId", FBAuth, deleteChatMessage);
+app.get("/api/chat/:chatId", FBAuth, getChatMessages);
+app.post("/api/chat", FBAuth, createChatRoom);
+app.post("/api/chat/:chatId", FBAuth, createChatMessage);
+app.delete("/api/chat/:chatId/:messageId", FBAuth, deleteChatMessage);
 
 exports.api = functions.https.onRequest(app);
 
