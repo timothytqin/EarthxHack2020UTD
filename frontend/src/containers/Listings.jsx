@@ -5,7 +5,7 @@ import styles from "../css/listings.module.css";
 import ListingCard from "../components/ListingCard";
 import { getFilteredListings } from "../selectors";
 
-const Products = props => {
+const Listings = props => {
   const listings = useSelector(state => getFilteredListings(state));
   console.log("LISTINGCARD: " + JSON.stringify(listings));
   return (
@@ -21,4 +21,4 @@ const Products = props => {
   );
 };
 
-export default Products;
+export default Listings;
