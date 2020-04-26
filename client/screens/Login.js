@@ -14,9 +14,13 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { useSelector, useDispatch } from "react-redux";
 
 import { globalStyles, images } from "../styles/global";
 import Button from "../components/Button";
+
+import { login } from "../auth";
+import { setAuthenticated } from "../redux/actions/authActions";
 
 const LoginSchema = Yup.object({
   email: Yup.string().required(),
@@ -24,6 +28,8 @@ const LoginSchema = Yup.object({
 });
 
 export default function Login({ navigation, route }) {
+  const dispatch = useDispatch();
+  const authenticated = useSelector(state => state.auth.authenticated);
   return (
     <KeyboardAvoidingView
       style={styles.login}
@@ -41,7 +47,17 @@ export default function Login({ navigation, route }) {
             }}
             validationSchema={LoginSchema}
             onSubmit={(values, actions) => {
-              
+              login(values)
+                .then(() => {
+                  dispatch(setAuthenticated(true));
+                })
+                .then(() => {
+                  navigation.navigate("App");
+                })
+                .catch(err => {
+                  console.error(err);
+                });
+              actions.resetForm();
               Keyboard.dismiss();
             }}
           >

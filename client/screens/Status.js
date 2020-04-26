@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import store from "../store";
+import store from "../redux/store";
 import { globalStyles } from "../styles/global";
 
 export default function Status({ navigation, route }) {

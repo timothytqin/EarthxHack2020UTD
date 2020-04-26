@@ -5,17 +5,19 @@ import {
   DrawerItemList,
   DrawerItem
 } from "@react-navigation/drawer";
+import { useDispatch } from "react-redux";
+import { setAuthenticated } from "../redux/actions/authActions";
 
-import store from "../store";
-import { signOutAsync, getCachedAuthAsync } from "../auth";
+import { logout } from "../auth";
 import Button from "./Button";
 
 export default function DrawerContent(props) {
-  const [profile, setProfile] = useState(store.getState().reducer.profile);
+  const dispatch = useDispatch();
+  // const [profile, setProfile] = useState(store.getState().reducer.profile);
 
-  store.subscribe(() => {
-    setProfile(store.getState().reducer.profile);
-  });
+  // store.subscribe(() => {
+  //   setProfile(store.getState().reducer.profile);
+  // });
 
   const newProps = {
     ...props,
@@ -31,7 +33,7 @@ export default function DrawerContent(props) {
       <DrawerContentScrollView {...newProps}>
         <View style={styles.header}>
           {/* <Image style={styles.pfp} source={{ uri: profile.thumbnail }} /> */}
-          <Text style={styles.boldedText}>{profile.name}</Text>
+          {/* <Text style={styles.boldedText}>{profile.name}</Text> */}
         </View>
         <DrawerItemList {...newProps} />
         {/* <DrawerItem label="Help" onPress={() => console.log("HALPPPP")} /> */}
@@ -48,8 +50,9 @@ export default function DrawerContent(props) {
         buttonStyle={{ marginBottom: 15 }}
         onPress={async () => {
           props.navigation.navigate("Home");
-          const cachedAuth = await getCachedAuthAsync();
-          signOutAsync(cachedAuth);
+          console.log(props);
+          logout();
+          dispatch(setAuthenticated(false));
         }}
       />
     </View>

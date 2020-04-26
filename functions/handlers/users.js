@@ -33,7 +33,20 @@ exports.getAuthenticatedUser = (req, res) => {
     .then(data => {
       userData.listings = [];
       data.forEach(doc => {
-        userData.listings.push(doc.data());
+        const listing = doc.data();
+        listing.listingId = doc.id;
+        listing.requests = [];
+        db.collection("requests")
+          .where("listingId", "==", listing.listingId)
+          .get()
+          .then(reqs => {
+            reqs.forEach(req => {
+              const request = req.data();
+              request.requestId = req.id;
+              listing.requests.push(request);
+            });
+          });
+        userData.listings.push(listing);
       });
       return db
         .collection(`chatrooms`)

@@ -16,12 +16,12 @@ export default function HomeStack() {
   return (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Reminders" component={Reminders} />
+      {/* <Stack.Screen name="Reminders" component={Reminders} />
       <Stack.Screen name="EditReminder" component={EditReminder} />
       <Stack.Screen name="Events" component={Events} />
       <Stack.Screen name="EditEvents" component={EditEvents} />
       <Stack.Screen name="EventDetail" component={EventDetail} />
-      <Stack.Screen name="ViewAttachment" component={ViewAttachment} />
+      <Stack.Screen name="ViewAttachment" component={ViewAttachment} /> */}
     </Stack.Navigator>
   );
 }

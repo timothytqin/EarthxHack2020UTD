@@ -22,8 +22,8 @@ import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
 import Toast from "react-native-tiny-toast";
 
-import store from "../../store";
-import { addHours, updateHours } from "../../redux/actions";
+import store from "../../redux/store";
+import { addHours, updateHours } from "../../redux/actions/authActions";
 import { globalStyles, images } from "../../styles/global";
 import { constants } from "../../shared/constants";
 import { httpPostOptions } from "../../shared/http";

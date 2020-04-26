@@ -35,11 +35,11 @@ export default function HomeDrawer() {
         component={Contact}
         options={{ drawerLabel: "Contact" }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="Profile"
         component={Profile}
         options={{ drawerLabel: "My Profile" }}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 }

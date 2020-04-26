@@ -11,8 +11,8 @@ import {
 import { ListItem } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import store from "../../../store";
-import { addEvent, deleteEvent, loadEvents } from "../../../redux/actions";
+import store from "../../../redux/store";
+import { addEvent, deleteEvent, loadEvents } from "../../../redux/actions/authActions";
 import { globalStyles, images } from "../../../styles/global";
 
 import Button from "../../../components/Button";

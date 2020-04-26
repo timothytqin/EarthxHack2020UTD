@@ -10,31 +10,27 @@ import {
 } from "react-native";
 import { ListItem } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
-import store from "../../store";
+import store from "../../redux/store";
 import { globalStyles, images } from "../../styles/global";
 import Card from "../../components/Card";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function Home({ navigation }) {
-  const [reminders, setReminders] = useState(
-    store.getState().reducer.reminders
-  );
+  // const [reminders, setReminders] = useState(
+  //   store.getState().reducer.reminders
+  // );
 
-  const [events, setEvents] = useState(store.getState().reducer.events);
-  const [position, setPosition] = useState(
-    store.getState().reducer.profile.position
-  );
-  const [authenticated, setAuthenticated] = useState(
-    store.getState().reducer.authenticated
-  );
+  // const [events, setEvents] = useState(store.getState().reducer.events);
+  // const [position, setPosition] = useState(
+  //   store.getState().reducer.profile.position
+  // );
+  // const [authenticated, setAuthenticated] = useState(
+  //   store.getState().reducer.authenticated
+  // );
 
-  store.subscribe(() => {
-    setAuthenticated(store.getState().reducer.authenticated);
-    setPosition(store.getState().reducer.profile.position);
-    setReminders(store.getState().reducer.reminders);
-    setEvents(store.getState().reducer.events);
-  });
+  const authenticated = useSelector(state => state.auth.authenticated);
 
   navigation.setOptions({
     headerLeft: () => (
@@ -49,6 +45,7 @@ export default function Home({ navigation }) {
 
   return (
     <View style={globalStyles.container}>
+      <Text>UTD</Text>
       <View style={styles.headerImage}>
         {/* <Image
           style={styles.logo}
@@ -59,7 +56,7 @@ export default function Home({ navigation }) {
         /> */}
       </View>
       <View style={{ flex: 6 }}>
-        <ScrollView>
+        {/* <ScrollView>
           <Card
             title="Reminders"
             // background={images.reminder}
@@ -155,7 +152,7 @@ export default function Home({ navigation }) {
               </View>
             )}
           </Card>
-        </ScrollView>
+        </ScrollView> */}
       </View>
     </View>
   );

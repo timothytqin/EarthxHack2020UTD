@@ -10,8 +10,8 @@ import {
 import { ListItem } from "react-native-elements";
 import MultiSelect from "react-native-multiple-select";
 
-import store from "../../store";
-import { deleteHours } from "../../redux/actions";
+import store from "../../redux/store";
+import { deleteHours } from "../../redux/actions/authActions";
 import { globalStyles } from "../../styles/global";
 import { MaterialIcons } from "@expo/vector-icons";
 import { constants } from "../../shared/constants";

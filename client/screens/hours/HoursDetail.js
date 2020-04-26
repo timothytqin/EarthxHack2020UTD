@@ -10,8 +10,8 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import store from "../../store";
-import { updateHours } from "../../redux/actions";
+import store from "../../redux/store";
+import { updateHours } from "../../redux/actions/authActions";
 import { constants } from "../../shared/constants";
 import { globalStyles, images } from "../../styles/global";
 import { httpPostOptions } from "../../shared/http";
