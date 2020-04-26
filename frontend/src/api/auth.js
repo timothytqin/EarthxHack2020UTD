@@ -9,10 +9,13 @@ export const login = model => {
 };
 
 export const getCredentials = () => {
+  axios.defaults.headers.common["Authorization"] = localStorage.getItem(
+    "FBIdToken"
+  );
   return axios.get("/user");
 };
 
 export const logout = () => {
   localStorage.removeItem("FBIdToken");
   axios.defaults.headers.common["Authorization"] = null;
-}
+};

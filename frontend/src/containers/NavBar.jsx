@@ -179,6 +179,7 @@ export default function NavBar(props) {
     dispatch(showLoading());
     const cachedToken = localStorage.getItem("FBIdToken");
     if (cachedToken) {
+      console.log("CACHE FOUND");
       getCredentials()
         .then(res => {
           dispatch(receiveCredentials(res.data));
@@ -191,9 +192,10 @@ export default function NavBar(props) {
           props.history.push("/login");
         });
     } else {
+      console.log("NO CACHE");
       props.history.push("/login");
     }
-  }, []);
+  }, [localStorage]);
 
   return (
     <div className={classes.grow}>
