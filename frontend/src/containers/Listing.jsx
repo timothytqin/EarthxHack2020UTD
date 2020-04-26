@@ -78,7 +78,7 @@ const Listing = (props) => {
     };
     const handleConfirmEdit = () => {
         if (mode === 'create') {
-            dispatch(createListing(listing));
+            dispatch(createListing(listing, image));
         } else {
             dispatch(editListing(listing));
         }
@@ -112,100 +112,115 @@ const Listing = (props) => {
     };
     const [image, setImage] = React.useState();
     const handleAddImage = (picture) => {
-        console.log(picture);
+        setImage(picture[0]);
     };
 
     const classes = useStyles();
 
     return (
         <>
-            {mode === 'create' && (
-                <FormControl className={classes.formControl}>
-                    <InputLabel id="type-select">Type</InputLabel>
-                    <Select
-                        id="type-select"
-                        value={type}
-                        onChange={handleChangeType}
-                    >
-                        <MenuItem value="laptop">Laptop</MenuItem>
-                        <MenuItem value="tablet">Tablet</MenuItem>
-                        <MenuItem value="textbook">Textbook</MenuItem>
-                    </Select>
-                </FormControl>
-            )}
-            {listing && listing.body.type && (
-                <div className={product.bg}>
-                    {listing.body.listingImage ? (
-                        <Card className={classes.root}>
-                            <img
-                                className={product.img}
-                                src={listing.body.listingImage}
-                                alt={`product id: ${id}`}
+            <div className={product.bg}>
+                {mode === 'create' && (
+                    <FormControl className={classes.formControl}>
+                        <InputLabel id="type-select">Type</InputLabel>
+                        <Select
+                            id="type-select"
+                            value={type}
+                            onChange={handleChangeType}
+                        >
+                            <MenuItem value="laptop">Laptop</MenuItem>
+                            <MenuItem value="tablet">Tablet</MenuItem>
+                            <MenuItem value="textbook">Textbook</MenuItem>
+                        </Select>
+                    </FormControl>
+                )}
+                {listing && listing.body.type && (
+                    <>
+                        {listing.body.listingImage ? (
+                            <Card className={classes.root}>
+                                <img
+                                    className={product.img}
+                                    src={listing.body.listingImage}
+                                    alt={`product id: ${id}`}
+                                />
+                            </Card>
+                        ) : (
+                            <ImageUploader
+                                singleImage
+                                onChange={handleAddImage}
+                                withPreview
                             />
-                        </Card>
-                    ) : (
-                        <ImageUploader singleImage onChange={handleAddImage} />
-                    )}
-                    <div className={product.title_container}>
-                        <Typography color="primary" variant="h4">
-                            {listing.body.title}
-                        </Typography>
-                    </div>
-                    {mode === 'view' && (
-                        <div className={product.action_container}>
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                onClick={handleRequest}
-                            >
-                                Request
-                            </Button>
-                        </div>
-                    )}
-                    <div className={product.details_container}>
-                        {listing.body &&
-                            Object.keys(listing.body).map((key) => {
-                                if (
-                                    key === 'type' ||
-                                    key === 'listingImage' ||
-                                    key === 'distance' ||
-                                    (mode === 'view' && key === 'title')
-                                ) {
-                                    return null;
-                                }
-                                return (
-                                    <div
-                                        className={product.details_row}
-                                        key={key}
-                                    >
-                                        <div className={product.details_label}>
-                                            {key}
-                                        </div>
-                                        <div className={product.details_text}>
-                                            <TextField
-                                                disabled={mode === 'view'}
-                                                value={listing.body[key]}
-                                                onChange={(event) =>
-                                                    handleChangeText(event, key)
-                                                }
-                                                required
-                                            />
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        {mode !== 'view' && (
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                onClick={handleConfirmEdit}
-                            >
-                                Confirm
-                            </Button>
                         )}
-                    </div>
-                </div>
-            )}
+                        <div className={product.title_container}>
+                            <Typography color="primary" variant="h4">
+                                {listing.body.title}
+                            </Typography>
+                        </div>
+                        {mode === 'view' && (
+                            <div className={product.action_container}>
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={handleRequest}
+                                >
+                                    Request
+                                </Button>
+                            </div>
+                        )}
+                        <div className={product.details_container}>
+                            {listing.body &&
+                                Object.keys(listing.body).map((key) => {
+                                    if (
+                                        key === 'type' ||
+                                        key === 'listingImage' ||
+                                        key === 'distance' ||
+                                        (mode === 'view' && key === 'title')
+                                    ) {
+                                        return null;
+                                    }
+                                    return (
+                                        <div
+                                            className={product.details_row}
+                                            key={key}
+                                        >
+                                            <div
+                                                className={
+                                                    product.details_label
+                                                }
+                                            >
+                                                {key}
+                                            </div>
+                                            <div
+                                                className={product.details_text}
+                                            >
+                                                <TextField
+                                                    disabled={mode === 'view'}
+                                                    value={listing.body[key]}
+                                                    onChange={(event) =>
+                                                        handleChangeText(
+                                                            event,
+                                                            key
+                                                        )
+                                                    }
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            {mode !== 'view' && (
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={handleConfirmEdit}
+                                >
+                                    Confirm
+                                </Button>
+                            )}
+                        </div>
+                    </>
+                )}
+            </div>
         </>
     );
 };
