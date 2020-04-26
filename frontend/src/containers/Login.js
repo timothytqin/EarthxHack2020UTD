@@ -38,7 +38,7 @@ export default function Login(props) {
           dispatch(receiveCredentials(res.data));
           dispatch(fetchListings());
           dispatch(hideLoading());
-          props.history.push("/listings");
+          props.history.push("/");
         });
       })
       .catch(err => setErrors(err));

@@ -182,33 +182,33 @@ export default function NavBar(props) {
     </Menu>
   );
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //     if (
-  //         props.location.pathname !== '/signup' &&
-  //         props.location.pathname !== '/login'
-  //     ) {
-  //         dispatch(showLoading());
-  //         const cachedToken = localStorage.getItem('FBIdToken');
-  //         if (cachedToken) {
-  //             console.log('CACHE FOUND');
-  //             getCredentials()
-  //                 .then((res) => {
-  //                     dispatch(receiveCredentials(res.data));
-  //                     dispatch(hideLoading());
-  //                     dispatch(fetchListings());
-  //                 })
-  //                 .catch((err) => {
-  //                     console.log(err);
-  //                     logout();
-  //                     props.history.push('/login');
-  //                 });
-  //         } else {
-  //             logout();
-  //             props.history.push('/login');
-  //         }
-  //         setAuthenticated(localStorage.getItem('FBIdToken'));
-  //     }
-  // }, [props.location.pathname, props.history, dispatch]);
+  useEffect(() => {
+    if (
+      props.location.pathname !== "/signup" &&
+      props.location.pathname !== "/login"
+    ) {
+      dispatch(showLoading());
+      const cachedToken = localStorage.getItem("FBIdToken");
+      if (cachedToken) {
+        console.log("CACHE FOUND");
+        getCredentials()
+          .then(res => {
+            dispatch(receiveCredentials(res.data));
+            dispatch(hideLoading());
+            dispatch(fetchListings());
+          })
+          .catch(err => {
+            console.log(err);
+            logout();
+            props.history.push("/login");
+          });
+      } else {
+        logout();
+        props.history.push("/login");
+      }
+      setAuthenticated(localStorage.getItem("FBIdToken"));
+    }
+  }, [props.location.pathname, props.history, dispatch]);
 
   return (
     <div className={classes.grow}>
