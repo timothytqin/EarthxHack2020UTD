@@ -72,6 +72,16 @@ exports.getAuthenticatedUser = (req, res) => {
           notificationId: doc.id
         });
       });
+      return db
+        .collection("requests")
+        .where("username", "==", req.user.username)
+        .get();
+    })
+    .then(data => {
+      userData.requests = [];
+      data.forEach(doc => {
+        userData.requests.push(doc.data().listingId);
+      });
       return res.json(userData);
     })
     .catch(err => {

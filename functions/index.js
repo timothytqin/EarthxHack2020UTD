@@ -43,7 +43,7 @@ app.delete("/listing/:listingId", FBAuth, deleteListing);
 // Request routes
 app.get("/request", FBAuth, getRequests);
 app.post("/request", FBAuth, createRequest);
-app.delete("/request/:requestId", FBAuth, deleteRequest);
+app.delete("/request/:listingId", FBAuth, deleteRequest);
 
 // Chat routes
 app.get("/chat/:chatId", FBAuth, getChatMessages);

@@ -63,15 +63,19 @@ exports.createRequest = (req, res) => {
 };
 
 exports.deleteRequest = (req, res) => {
-  const document = db.doc(`/requests/${req.params.requestId}`);
-  document
+  db.collection("requests")
+    .where("username", "==", req.user.username)
+    .where("listingId", "==", req.params.listingId)
+    .limit(1)
     .get()
-    .then(doc => {
-      if (!doc.exists)
+    .then(data => {
+      if (data.size === 0)
         return res.status(404).json({ error: "Request not found" });
-      if (doc.data().username !== req.user.username)
-        return res.status(403).json({ error: "Unauthorized" });
-      return document.delete();
+      let requestId;
+      data.forEach(doc => {
+        requestId = doc.id;
+      });
+      return db.doc(`/requests/${requestId}`).delete();
     })
     .then(() => {
       return res.json({ message: "Request deleted successfully" });
