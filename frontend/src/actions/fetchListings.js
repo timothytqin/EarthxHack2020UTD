@@ -61,22 +61,22 @@ export const fetchListings = () => async (dispatch, getState) => {
 
     const token = localStorage.getItem('FBIdToken');
     axios.defaults.headers.common['Authorization'] = token;
-    axios.get('/listing').then(async (res) => {
+    axios.get('/api/listing').then(async (res) => {
         const listings = [];
         for (let listing of res.data) {
             let distance = -1;
-            // await axios
-            //   .get(
-            //     `https://www.zipcodeapi.com/rest/${ZIP_CODE_API_KEY}/distance.json/${
-            //       listing.location
-            //     }/${75024}/mi`
-            //   )
-            //   .then(res => res.json())
-            //   .then(res => (distance = res.distance))
-            //   .catch(err => {
-            //     console.error(err);
-            //     distance = -1;
-            //   });
+            await axios
+                .get(
+                    `https://www.zipcodeapi.com/rest/${ZIP_CODE_API_KEY}/distance.json/${
+                        listing.location
+                    }/${getState().user.credentials.location}/mi`
+                )
+                .then((res) => res.json())
+                .then((res) => (distance = res.distance))
+                .catch((err) => {
+                    console.error(err);
+                    distance = -1;
+                });
             listing.body.distance = distance;
             const url = await storage
                 .ref(listing.body.listingImage)
@@ -84,7 +84,11 @@ export const fetchListings = () => async (dispatch, getState) => {
             listing.body.listingImage = url;
             listings.push(listing);
         }
-        dispatch(receiveListings(listings));
+        dispatch(
+            receiveListings(
+                listings.sort((a, b) => a.body.distance - b.body.distance)
+            )
+        );
     }); // TODO
     dispatch(hideLoading());
 };

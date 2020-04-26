@@ -17,6 +17,7 @@ const credentials = (state = {}, action) => {
 const listings = (state = [], action) => {
     switch (action.type) {
         case RECEIVE_CREDENTIALS:
+            console.log(action.payload);
             return action.payload.listings;
         default:
             return state;

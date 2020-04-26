@@ -10,7 +10,6 @@ export default function ChatList(props) {
     useEffect(() => {
         if (chatId) {
             let getChatMessages = messagesdb.where('chatId', '==', chatId);
-            console.log('1');
             getChatMessages.onSnapshot((querySnapshot) => {
                 console.log(querySnapshot);
                 querySnapshot.forEach((message) => {
