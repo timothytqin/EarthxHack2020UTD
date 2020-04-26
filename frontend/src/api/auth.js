@@ -19,3 +19,11 @@ export const logout = () => {
   localStorage.removeItem("FBIdToken");
   axios.defaults.headers.common["Authorization"] = null;
 };
+
+export const signup = model => {
+  return axios.post("/signup", model).then(res => {
+    const token = `Bearer ${res.data.token}`;
+    localStorage.setItem("FBIdToken", token);
+    axios.defaults.headers.common["Authorization"] = token;
+  });
+};

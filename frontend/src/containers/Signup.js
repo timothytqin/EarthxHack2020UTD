@@ -7,7 +7,12 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { useTheme } from "@material-ui/core/styles";
 
+import { useDispatch } from "react-redux";
+import { showLoading, hideLoading } from "react-redux-loading-bar";
+
 import axios from "axios";
+import { receiveCredentials } from "../actions/receiveCredentials";
+import { signup, getCredentials } from "../api/auth";
 
 // Redux stuff
 
@@ -17,7 +22,10 @@ export default function Signup(props) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [location, setLocation] = useState("");
   const [errors, setErrors] = useState({});
+
+  const dispatch = useDispatch();
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -25,15 +33,17 @@ export default function Signup(props) {
       email,
       password,
       confirmPassword,
-      username
+      username,
+      location
     };
-    axios
-      .post("/signup", userData)
-      .then(res => {
-        localStorage.setItem("FBIdToken", `Bearer ${res.data.token}`);
+    dispatch(showLoading());
+    signup(userData).then(() => {
+      getCredentials().then(res => {
+        dispatch(receiveCredentials(res.data));
+        dispatch(hideLoading());
         props.history.push("/");
-      })
-      .catch(err => setErrors(err));
+      });
+    });
   };
   return (
     <Grid container style={classes.form}>
@@ -89,6 +99,18 @@ export default function Signup(props) {
             error={errors.username ? true : false}
             value={username}
             onChange={e => setUsername(e.target.value)}
+            fullWidth
+          />
+          <TextField
+            id="location"
+            name="location"
+            type="text"
+            label="Zip Code"
+            style={classes.textField}
+            helperText={errors.location}
+            error={errors.location ? true : false}
+            value={location}
+            onChange={e => setLocation(e.target.value)}
             fullWidth
           />
           {errors.general && (
