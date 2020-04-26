@@ -22,29 +22,29 @@ const Listing = (props) => {
     );
     const classes = useStyles();
 
-    const view = (
+    const view = listing && (
         <div classNambe={product.bg}>
             <Card className={classes.root}>
                 <img
                     className={product.img}
-                    src={listing.listingImage}
+                    src={listing.body.listingImage}
                     alt={`product id: ${id}`}
                 />
             </Card>
             <div className={product.title_container}>
                 <Typography color="primary" variant="h4">
-                    {listing.title}
+                    {listing.body.title}
                 </Typography>
             </div>
             <div className={product.action_container}>
                 <Button color="secondary">Request</Button>
             </div>
             <div className={product.details_container}>
-                {listing.type && (
+                {listing.body.type && (
                     <div className={product.details_row}>
                         <div className={product.details_label}>type</div>
                         <div className={product.details_text}>
-                            {listing.type}
+                            {listing.body.type}
                         </div>
                     </div>
                 )}
@@ -65,7 +65,7 @@ const Listing = (props) => {
         </div>
     );
 
-    const edit = (
+    const edit = listing && (
         <div className={product.bg}>
             <Card className={classes.root}>
                 <img
@@ -108,7 +108,7 @@ const Listing = (props) => {
         </div>
     );
 
-    return <>{listing && view}</>;
+    return <>{view}</>;
 };
 
 export default Listing;

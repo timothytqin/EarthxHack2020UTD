@@ -20,10 +20,10 @@ const ListingCard = ({ listing }) => {
                 style={{ color: 'inherit', textDecoration: 'inherit' }}
             >
                 <CardActionArea>
-                    <CardMedia image={listing.listingImage} />
+                    <CardMedia image={listing.body.listingImage} />
                     <CardContent>
                         <Typography variant="h5" color="primary">
-                            {listing.title}
+                            {listing.body.title}
                         </Typography>
                     </CardContent>
                 </CardActionArea>

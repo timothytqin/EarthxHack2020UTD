@@ -26,6 +26,7 @@ module.exports = (req, res, next) => {
     .then(data => {
       req.user.username = data.docs[0].data().username;
       req.user.imageUrl = data.docs[0].data().imageUrl;
+      req.user.location = data.docs[0].data().location;
       return next();
     })
     .catch(err => {
