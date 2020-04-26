@@ -1,6 +1,8 @@
 import React, { Component, useState } from "react";
 import axios from "axios";
 
+import { login, getCredentials } from "../api/auth";
+
 // MUI Stuff
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -29,18 +31,12 @@ export default function Login(props) {
       password
     };
     dispatch(showLoading());
-    axios
-      .post("/login", userData)
-      .then(res => {
-        const token = `Bearer ${res.data.token}`;
-        localStorage.setItem("FBIdToken", token);
-        axios.defaults.headers.common["Authorization"] = token;
-        props.history.push("/notifications");
-      })
+    login(userData)
       .then(() => {
-        axios.get("/user").then(res => {
+        getCredentials().then(res => {
           dispatch(receiveCredentials(res.data));
           dispatch(hideLoading());
+          props.history.push("/");
         });
       })
       .catch(err => setErrors(err));
