@@ -11,9 +11,6 @@ const receiveListings = (data) => {
 export const fetchListings = () => async (dispatch) => {
     dispatch(showLoading());
 
-    // gonna hard code now bc I can't access the api.
-
-    // axios.get('/listings').then((res) => console.log(res));
     // liquors.get().then(async (snapshot) => {
     //     var listings = {};
     //     for (let doc of snapshot.docs) {
@@ -60,6 +57,9 @@ export const fetchListings = () => async (dispatch) => {
         },
     ];
 
+    const token = localStorage.getItem('FBIdToken');
+    axios.defaults.headers.common['Authorization'] = token;
+    axios.get('/listing').then((res) => console.log(res));
     dispatch(receiveListings(listings));
     dispatch(hideLoading());
 };

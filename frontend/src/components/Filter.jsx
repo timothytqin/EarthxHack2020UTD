@@ -57,7 +57,6 @@ const useStyles = makeStyles({
         textTransform: 'capitalize',
         '& span': {
             fontWeight: '600',
-            fontFamily: 'Open Sans',
         },
     },
     expansionSummary: {
@@ -107,7 +106,6 @@ const FilterButton = withStyles({
     root: {
         color: 'var(--grey)',
         backgroundColor: 'var(--side-color)',
-        fontFamily: 'Open Sans',
         fontWeight: 700,
         textTransform: 'none',
         marginLeft: '1.1rem',
