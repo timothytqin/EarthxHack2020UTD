@@ -74,5 +74,5 @@ export const getAvailableFilters = createSelector(
 );
 
 export const getListing = (state, id) => {
-    state.listings.find((listing) => listing.id === id);
+    return state.listings.find((listing) => listing.id == id);
 };

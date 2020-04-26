@@ -31,7 +31,7 @@ ReactDOM.render(
                 <NavBar />
                 <Switch>
                     <Route exact path="/" component={Landing} />
-                    <Route path="/app" component={Listings} />
+                    <Route exact path="/app" component={Listings} />
                     <Route exact path="/app/:id" component={Listing} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/signup" component={Signup} />

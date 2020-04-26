@@ -22,86 +22,89 @@ const useStyles = makeStyles({
         marginTop: '1rem',
     },
 });
-const Product = (props) => {
+const Listing = (props) => {
     const { id } = useParams();
-    const liquor = useSelector((state) => getListing(state, id)); // have to use api call now
+    const [listing, setListing] = React.useState(
+        useSelector((state) => getListing(state, id))
+    );
+    console.log(listing);
     const classes = useStyles();
     return (
         <>
-            {liquor && (
+            {listing && (
                 <div className={product.bg}>
                     <Card className={classes.root}>
                         <img
                             className={product.img}
-                            src={liquor.img}
+                            src={listing.img}
                             alt={`product id: ${id}`}
                         />
                     </Card>
                     <div className={product.title_container}>
                         <h1 className={product.name}>
-                            {liquor.type === 'wine' &&
-                                `${liquor.winery} ${liquor.varietal}, ${liquor.vintage}`}
-                            {liquor.type === 'beer' && `${liquor.producer}`}
+                            {listing.type === 'wine' &&
+                                `${listing.winery} ${listing.varietal}, ${listing.vintage}`}
+                            {listing.type === 'beer' && `${listing.producer}`}
                         </h1>
 
                         <span className={product.size}>
-                            {liquor.size + 'ml, ' + liquor.pack + ' pack'}
+                            {listing.size + 'ml, ' + listing.pack + ' pack'}
                         </span>
                     </div>
                     <div className={product.action_container}>
                         <span className={product.price}>
-                            {'$' + liquor.salePrice}
+                            {'$' + listing.salePrice}
                         </span>
                         <Button className={classes.button}>Add to Cart</Button>
                     </div>
                     <div className={product.details_container}>
-                        {liquor.category && (
+                        {listing.category && (
                             <div className={product.details_row}>
                                 <div className={product.details_label}>
                                     category
                                 </div>
                                 <div className={product.details_text}>
-                                    {liquor.category}
+                                    {listing.category}
                                 </div>
                             </div>
                         )}
-                        {liquor.country && (
+                        {listing.country && (
                             <div className={product.details_row}>
                                 <div className={product.details_label}>
                                     country
                                 </div>
                                 <div className={product.details_text}>
-                                    {liquor.country}
+                                    {listing.country}
                                 </div>
                             </div>
                         )}
-                        {liquor.type && (
+                        {listing.type && (
                             <div className={product.details_row}>
                                 <div className={product.details_label}>
                                     type
                                 </div>
                                 <div className={product.details_text}>
-                                    {liquor.type}
+                                    {listing.type}
                                 </div>
                             </div>
                         )}
-                        {liquor.varietal && (
+                        {listing.varietal && (
                             <div className={product.details_row}>
                                 <div className={product.details_label}>
                                     varietal
                                 </div>
                                 <div className={product.details_text}>
-                                    {liquor.varietal}
+                                    {listing.varietal}
                                 </div>
                             </div>
                         )}
-                        {liquor.winery && (
+                        {listing.winery && (
                             <div className={product.details_row}>
                                 <div className={product.details_label}>
                                     winery
                                 </div>
                                 <div className={product.details_text}>
-                                    {liquor.winery}
+                                    {listing.winery}
                                 </div>
                             </div>
                         )}
@@ -112,4 +115,4 @@ const Product = (props) => {
     );
 };
 
-export default Product;
+export default Listing;
