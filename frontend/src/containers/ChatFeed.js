@@ -41,16 +41,10 @@ export default function ChatFeed(props) {
     };
 
     return (
-        <Grid container maxHeight>
-            <Grid item container>
-                <Grid item sm={3} />
-                <Grid item sm={6}>
-                    {messages.map((message) => {
-                        return <p>{message.message}</p>;
-                    })}
-                </Grid>
-                <Grid item sm={3} />
-            </Grid>
+        <div style={{ maxWidth: '30rem', margin: 'auto', marginTop: '2rem' }}>
+            {messages.map((message) => {
+                return <p style={{ textAlign: 'right' }}>{message.message}</p>;
+            })}
             <Grid item container direction="row">
                 <TextField
                     id="message"
@@ -71,6 +65,6 @@ export default function ChatFeed(props) {
                     <SendIcon />
                 </Button>
             </Grid>
-        </Grid>
+        </div>
     );
 }

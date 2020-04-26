@@ -65,18 +65,18 @@ export const fetchListings = () => async (dispatch, getState) => {
         const listings = [];
         for (let listing of res.data) {
             let distance = -1;
-            await axios
-                .get(
-                    `https://www.zipcodeapi.com/rest/${ZIP_CODE_API_KEY}/distance.json/${
-                        listing.location
-                    }/${getState().user.credentials.location}/mi`
-                )
-                .then((res) => res.json())
-                .then((res) => (distance = res.distance))
-                .catch((err) => {
-                    console.error(err);
-                    distance = -1;
-                });
+            // await axios
+            //     .get(
+            //         `https://www.zipcodeapi.com/rest/${ZIP_CODE_API_KEY}/distance.json/${
+            //             listing.location
+            //         }/${getState().user.credentials.location}/mi`
+            //     )
+            //     .then((res) => res.json())
+            //     .then((res) => (distance = res.distance))
+            //     .catch((err) => {
+            //         console.error(err);
+            //         distance = -1;
+            //     });
             listing.body.distance = distance;
             const url = await storage
                 .ref(listing.body.listingImage)
