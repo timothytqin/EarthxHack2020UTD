@@ -1,4 +1,6 @@
 export const RECEIVE_LISTINGS = 'RECEIVE_LISTINGS';
+export const EDIT_LISTING = 'EDIT_LISTING';
+export const CREATE_LISTING = 'CREATE_LISTING';
 export const UPDATE_TYPE = 'UPDATE_TYPE';
 export const ADD_FILTER = 'ADD_FILTER';
 export const REMOVE_FILTER = 'REMOVE_FILTER';

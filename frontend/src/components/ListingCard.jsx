@@ -25,6 +25,12 @@ const ListingCard = ({ listing }) => {
                         <Typography variant="h5" color="primary">
                             {listing.body.title}
                         </Typography>
+                        <Typography variant="subtitle1">
+                            {listing.username}
+                        </Typography>
+                        <Typography variant="h6">
+                            {`${listing.body.distance} km`}
+                        </Typography>
                     </CardContent>
                 </CardActionArea>
             </Link>
