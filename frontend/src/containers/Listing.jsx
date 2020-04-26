@@ -111,6 +111,9 @@ const Listing = (props) => {
         });
     };
     const [image, setImage] = React.useState();
+    const handleAddImage = (picture) => {
+        console.log(picture);
+    };
 
     const classes = useStyles();
 
@@ -141,7 +144,7 @@ const Listing = (props) => {
                             />
                         </Card>
                     ) : (
-                        <ImageUploader singleImage />
+                        <ImageUploader singleImage onChange={handleAddImage} />
                     )}
                     <div className={product.title_container}>
                         <Typography color="primary" variant="h4">
