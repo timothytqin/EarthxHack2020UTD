@@ -48,7 +48,7 @@ export default function ChatFeed() {
             {chatrooms.map((chatroom) => {
                 return (
                     <ChatroomCard
-                        title={chatroom.members[0] + ', ' + chatroom.members[1]}
+                        title={`Chat between ${chatroom.members[0]} and ${chatroom.members[1]}`}
                         chatId={chatroom.id}
                         key={chatroom.id}
                     />
