@@ -29,6 +29,7 @@ const Listing = props => {
   );
   console.log(listing);
   const classes = useStyles();
+
   return (
     <>
       {listing && (
