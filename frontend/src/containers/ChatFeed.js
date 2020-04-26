@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { messagesdb } from "../firebase";
+import { chatroomsdb, messagesdb } from "../firebase";
 import { useSelector } from "react-redux";
-import { Card, Grid, Button, TextField } from "@material-ui/core";
+import {
+  Card,
+  Grid,
+  Button,
+  TextField,
+  Typography,
+  Avatar
+} from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import SendIcon from "@material-ui/icons/Send";
 
@@ -12,13 +19,21 @@ export default function ChatFeed(props) {
   const classes = useTheme();
   const { id } = useParams();
   const [messages, setMessages] = useState([]);
+  const [chatDetails, setChatDetails] = useState({});
   const [text, setText] = useState();
   const username = useSelector(state => state.user.credentials.username);
   useEffect(() => {
     if (id) {
-      let getChatMessages = messagesdb.where("chatId", "==", id);
+      chatroomsdb
+        .doc(`/${id}`)
+        .get()
+        .then(doc => {
+          setChatDetails(doc.data().members);
+        });
+      let getChatMessages = messagesdb
+        .where("chatId", "==", id)
+        .orderBy("createdAt");
       getChatMessages.onSnapshot(querySnapshot => {
-        console.log(querySnapshot);
         querySnapshot.forEach(message => {
           setMessages(messages => {
             // prevent duplicates
@@ -47,7 +62,7 @@ export default function ChatFeed(props) {
         maxWidth: "30rem",
         margin: "auto",
         marginTop: "3rem",
-        height: "70vh",
+        height: "72vh",
         overflowY: "scroll",
         display: "flex",
         flexDirection: "column",
@@ -55,6 +70,34 @@ export default function ChatFeed(props) {
       }}
     >
       <div>
+        {chatDetails[0] && (
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Avatar src={chatDetails[0].imageUrl} alt="profile" />
+            <Avatar
+              src={chatDetails[1].imageUrl}
+              alt="profile"
+              style={{
+                position: "relative",
+                left: -20,
+                border: "#fff 2px solid",
+                marginBottom: "5px"
+              }}
+            />
+            <Typography variant="h5" color="primary">
+              {chatDetails[0] &&
+                chatDetails[0].username + ", " + chatDetails[1].username}
+            </Typography>
+          </div>
+        )}
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          flex: 1
+        }}
+      >
         {messages.map(message => {
           return (
             <p
