@@ -71,7 +71,10 @@ export const fetchListings = () => async (dispatch, getState) => {
           }/${getState().user.credentials.location}/mi`
         )
         .then(res => res.json())
-        .then(res => (distance = res.distance))
+        .then(res => {
+          console.log(res);
+          distance = res.distance;
+        })
         .catch(err => {
           console.error(err);
           distance = -1;
