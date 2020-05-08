@@ -1,20 +1,44 @@
-import React, { useEffect } from 'react';
-import '../css/landing.css';
-import { Button, withStyles } from '@material-ui/core';
-import Logo from '../css/assets/logo.png';
+import React from "react";
+import "../css/landing.css";
+import Video from "../css/assets/demo.mp4";
 
-const Landing = (props) => {
-    useEffect(() => {
-        const authToken = localStorage.getItem('FBIdToken');
-        if (authToken) console.log('Auth token in local storage');
-        else console.log('No token stored, go log in');
-    }, []);
-    return (
-        <main className="bg">
-            <img src={Logo} alt="logo" style={{ width: '30vw' }} />
-            <div className="center">Our landing page</div>
-        </main>
-    );
+const Landing = props => {
+  return (
+    <main className="bg">
+      <video style={{ width: "40vw" }} controls>
+        <source src={Video} type="video/mp4" />
+      </video>
+      <div style={{ display: "flex", flexDirection: "column", margin: "5em" }}>
+        <h2>Demo Credentials:</h2>
+        <div>
+          <strong>Email: </strong>
+          temoc@utd.edu
+          <br />
+          <strong>Password: </strong>
+          temoc1
+          <br />
+        </div>
+        <br />
+        <div>
+          <strong>Email: </strong>
+          bevo@utexas.edu
+          <br />
+          <strong>Password: </strong>
+          bevoxv
+          <br />
+        </div>
+        <br />
+        <div>
+          <strong>Email: </strong>
+          reveille@tamu.edu
+          <br />
+          <strong>Password: </strong>
+          reveille
+          <br />
+        </div>
+      </div>
+    </main>
+  );
 };
 
 export default Landing;

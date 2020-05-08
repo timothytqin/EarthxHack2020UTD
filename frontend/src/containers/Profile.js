@@ -1,18 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import {
-  withStyles,
-  Button,
-  Card,
-  CardActionArea,
-  CardMedia,
-  CardContent,
-  Typography,
-  CardActions,
-  Grid,
-  Avatar
-} from "@material-ui/core";
-import { Link, useParams } from "react-router-dom";
+import { Button, CardContent, Typography, Avatar } from "@material-ui/core";
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ChatIcon from "@material-ui/icons/Chat";
 import { showLoading, hideLoading } from "react-redux-loading-bar";
@@ -85,7 +73,7 @@ const Profile = props => {
               }}
               onClick={() =>
                 createChatroom({ username, imageUrl: pfp }).then(res => {
-                  props.history.push(`/chat/${res.chatId}`);
+                  props.history.push(`/chat/${res.data.chatId}`);
                 })
               }
             >
@@ -97,6 +85,16 @@ const Profile = props => {
             Listings:
           </Typography>
           <CardContent>
+            {profile.length === 0 && (
+              <Typography
+                variant="h6"
+                style={{ textAlign: "center", marginTop: "1em" }}
+              >
+                You have no listings. Click on the listings icon (fifth icon
+                from the right on the menu bar) to view active listings. In the
+                bottom right corner will be a button that says add listing.
+              </Typography>
+            )}
             {profile.map(listing => {
               return (
                 <div key={listing.id} style={{ marginBottom: "1rem" }}>

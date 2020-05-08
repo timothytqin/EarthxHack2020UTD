@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { chatroomsdb } from "../firebase";
-import axios from "axios";
 import { useSelector } from "react-redux";
 
 import ChatroomCard from "../components/ChatroomCard";
-import { Grid } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
 export default function ChatFeed() {
   const username = useSelector(state => state.user.credentials.username);
@@ -20,7 +19,14 @@ export default function ChatFeed() {
                 return chatrooms;
               }
             }
-            return [...chatrooms, { ...chatroom.data(), id: chatroom.id }];
+            const result = [...chatrooms];
+            const newChatroom = { ...chatroom.data(), id: chatroom.id };
+            if (
+              newChatroom.members[0].username === username ||
+              newChatroom.members[1].username === username
+            )
+              result.push(newChatroom);
+            return result;
           });
         });
       });
@@ -37,8 +43,22 @@ export default function ChatFeed() {
         marginTop: "2rem"
       }}
     >
+      <Typography
+        variant="h4"
+        style={{ textAlign: "center", marginBottom: ".5em" }}
+      >
+        Chatrooms
+      </Typography>
+      {chatrooms.length === 0 && (
+        <Typography
+          variant="h6"
+          style={{ textAlign: "center", marginTop: "1em" }}
+        >
+          You have no chats. Go to another user's profile in order to chat with
+          them.
+        </Typography>
+      )}
       {chatrooms.map(chatroom => {
-        console.log("CHATROOM: " + JSON.stringify(chatroom));
         return (
           <ChatroomCard
             details={chatroom}

@@ -8,21 +8,14 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
-import Grid from "@material-ui/core/Grid";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import ChatIcon from "@material-ui/icons/Chat";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import MoreIcon from "@material-ui/icons/MoreVert";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
-import { Container, Link } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchListings } from "../actions/fetchListings";
 import { getNumNotifications } from "../selectors";
@@ -97,100 +90,21 @@ const useStyles = makeStyles(theme => ({
 export default function NavBar(props) {
   const numNotifications = useSelector(state => getNumNotifications(state));
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const username = useSelector(state => state.user.credentials.username);
-  const [authenticated, setAuthenticated] = useState(
-    localStorage.getItem("FBIdToken")
-  );
-
-  const handleProfileMenuOpen = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
-  const handleMobileMenuOpen = event => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
 
   const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
 
-  const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge color="secondary">
-            <ChatIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show new notifications" color="inherit">
-          <Badge badgeContent={numNotifications} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
   const dispatch = useDispatch();
   useEffect(() => {
     if (
       props.location.pathname !== "/signup" &&
-      props.location.pathname !== "/login"
+      props.location.pathname !== "/login" &&
+      props.location.pathname !== "/"
     ) {
       dispatch(showLoading());
       const cachedToken = localStorage.getItem("FBIdToken");
       if (cachedToken) {
-        console.log("CACHE FOUND");
         getCredentials()
           .then(res => {
             dispatch(receiveCredentials(res.data));
@@ -198,7 +112,6 @@ export default function NavBar(props) {
             dispatch(fetchListings());
           })
           .catch(err => {
-            console.log(err);
             logout();
             props.history.push("/login");
           });
@@ -206,7 +119,6 @@ export default function NavBar(props) {
         logout();
         props.history.push("/login");
       }
-      setAuthenticated(localStorage.getItem("FBIdToken"));
     }
   }, [props.location.pathname, props.history, dispatch]);
 
@@ -226,22 +138,8 @@ export default function NavBar(props) {
               Rentech
             </Typography>
           </IconButton>
-          {/* <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div> */}
           <div className={classes.grow} />
-          {/* <div className={classes.sectionDesktop}> */}
-          {authenticated && authenticated[0] ? (
+          {localStorage.getItem("FBIdToken") ? (
             <div>
               <IconButton
                 aria-label="dashboard"
@@ -271,7 +169,6 @@ export default function NavBar(props) {
                 aria-controls={menuId}
                 aria-haspopup="true"
                 href={`/u/${username}`}
-                // onClick={handleProfileMenuOpen}
                 color="inherit"
               >
                 <AccountCircle />
@@ -308,22 +205,8 @@ export default function NavBar(props) {
               </IconButton>
             </div>
           )}
-
-          {/* <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div> */}
         </Toolbar>
       </AppBar>
-      {/* {renderMobileMenu} */}
-      {/* {renderMenu} */}
     </div>
   );
 }

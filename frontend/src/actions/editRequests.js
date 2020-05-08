@@ -1,5 +1,4 @@
 import { ADD_REQUEST, DELETE_REQUEST } from "./types";
-import { showLoading, hideLoading } from "react-redux-loading-bar";
 
 export const addRequest = listingId => {
   return {

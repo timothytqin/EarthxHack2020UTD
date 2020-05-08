@@ -79,7 +79,6 @@ const Listing = props => {
     }
   }, [id, listing, username]);
   // redux state
-  console.log(username);
 
   const handleRequest = () => {
     if (!request.includes(listing.listingId))
@@ -91,7 +90,6 @@ const Listing = props => {
         dispatch(deleteRequest(listing.listingId));
       });
     }
-    console.log(listing);
   };
   const handleConfirmEdit = () => {
     if (mode === "create") {
@@ -99,7 +97,7 @@ const Listing = props => {
     } else {
       dispatch(editListing(listing));
     }
-    props.history.push("/");
+    props.history.push("/listings");
   };
   const handleChangeText = (event, name) => {
     setListing(listing => {

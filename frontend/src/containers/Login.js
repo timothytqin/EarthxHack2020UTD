@@ -1,15 +1,13 @@
-import React, { Component, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 
 import { login, getCredentials } from "../api/auth";
+import Logo from "../css/assets/utd_logo.png";
 
 // MUI Stuff
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
 import { fetchListings } from "../actions/fetchListings";
 import { useTheme } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
@@ -41,13 +39,33 @@ export default function Login(props) {
           props.history.push("/");
         });
       })
-      .catch(err => setErrors(err));
+      .catch(err => {
+        setErrors(err.response.data);
+      });
   };
   return (
     <Grid container style={classes.form}>
       <Grid item sm />
       <Grid item sm>
-        <Typography variant="h2" style={classes.pageTitle}>
+        <div
+          style={{
+            display: "flex",
+            marginTop: "5em",
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: "2em"
+          }}
+        >
+          <img
+            src={Logo}
+            alt="logo"
+            style={{ width: "8vw", marginRight: "1em" }}
+          />
+          <Typography variant="h2" style={{ color: "#000" }}>
+            Rentech
+          </Typography>
+        </div>
+        <Typography variant="h4" style={classes.pageTitle}>
           Login
         </Typography>
         <form noValidate onSubmit={handleSubmit} style={{ padding: "1em" }}>

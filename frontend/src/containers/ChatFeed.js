@@ -2,14 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { chatroomsdb, messagesdb } from "../firebase";
 import { useSelector } from "react-redux";
-import {
-  Card,
-  Grid,
-  Button,
-  TextField,
-  Typography,
-  Avatar
-} from "@material-ui/core";
+import { Button, TextField, Typography, Avatar } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import SendIcon from "@material-ui/icons/Send";
 
@@ -63,7 +56,6 @@ export default function ChatFeed(props) {
         margin: "auto",
         marginTop: "3rem",
         height: "72vh",
-        overflowY: "scroll",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between"
@@ -94,19 +86,47 @@ export default function ChatFeed(props) {
         style={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-end",
-          flex: 1
+          flex: 1,
+          overflowY: "scroll"
         }}
       >
+        <p style={{ textAlign: "center" }}>Start of conversation history</p>
         {messages.map(message => {
           return (
-            <p
+            <div
               style={{
-                textAlign: message.sender === username ? "right" : "left"
+                display: "flex",
+                justifyContent:
+                  message.sender === username ? "flex-end" : "flex-start"
               }}
             >
-              {message.message}
-            </p>
+              {message.sender !== username && (
+                <Avatar
+                  src={message.senderImage}
+                  alt="profile"
+                  style={{ width: "1em", height: "1em", marginRight: ".3em" }}
+                />
+              )}
+              <p
+                style={{
+                  display: "flex",
+                  overflowWrap: "break-word",
+                  wordBreak: "break-word",
+                  wordWrap: "break-word",
+                  hyphens: "auto",
+                  maxWidth: "inherit"
+                }}
+              >
+                {message.message}
+              </p>
+              {message.sender === username && (
+                <Avatar
+                  src={message.senderImage}
+                  alt="profile"
+                  style={{ width: "1em", height: "1em", marginLeft: ".3em" }}
+                />
+              )}
+            </div>
           );
         })}
       </div>

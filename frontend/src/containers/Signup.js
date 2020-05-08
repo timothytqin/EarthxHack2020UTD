@@ -1,4 +1,6 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
+
+import Logo from "../css/assets/utd_logo.png";
 
 // MUI Stuff
 import Grid from "@material-ui/core/Grid";
@@ -10,7 +12,6 @@ import { useTheme } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "react-redux-loading-bar";
 
-import axios from "axios";
 import { receiveCredentials } from "../actions/receiveCredentials";
 import { signup, getCredentials } from "../api/auth";
 
@@ -37,19 +38,39 @@ export default function Signup(props) {
       location
     };
     dispatch(showLoading());
-    signup(userData).then(() => {
-      getCredentials().then(res => {
-        dispatch(receiveCredentials(res.data));
-        dispatch(hideLoading());
-        props.history.push("/");
-      });
-    });
+    signup(userData)
+      .then(() => {
+        getCredentials().then(res => {
+          dispatch(receiveCredentials(res.data));
+          dispatch(hideLoading());
+          props.history.push("/");
+        });
+      })
+      .catch(err => setErrors(err.response.data));
   };
   return (
     <Grid container style={classes.form}>
       <Grid item sm />
       <Grid item sm>
-        <Typography variant="h2" style={classes.pageTitle}>
+        <div
+          style={{
+            display: "flex",
+            marginTop: "5em",
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: "2em"
+          }}
+        >
+          <img
+            src={Logo}
+            alt="logo"
+            style={{ width: "8vw", marginRight: "1em" }}
+          />
+          <Typography variant="h2" style={{ color: "#000" }}>
+            Rentech
+          </Typography>
+        </div>
+        <Typography variant="h4" style={classes.pageTitle}>
           Sign Up
         </Typography>
         <form noValidate onSubmit={handleSubmit} style={{ padding: "1em" }}>

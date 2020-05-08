@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
-import Filter from "../components/Filter";
-import styles from "../css/listings.module.css";
 import NotificationCard from "../components/NotificationCard";
 import Typography from "@material-ui/core/Typography";
 
@@ -14,15 +12,20 @@ const Notifications = props => {
           <Typography variant="h4" style={{ textAlign: "center" }}>
             Notifications
           </Typography>
-          {/* <div className={styles.bg}>
-          <main className={styles.grid}> */}
           {notifications.map(item => {
             return (
               <NotificationCard notification={item} key={item.notificationId} />
             );
           })}
-          {/* </main>
-        </div> */}
+          {notifications.length === 0 && (
+            <Typography
+              variant="h6"
+              style={{ textAlign: "center", marginTop: "1em" }}
+            >
+              You have no notifications. When someone requests for your listing,
+              it will show up here.
+            </Typography>
+          )}
         </div>
       )}
     </>

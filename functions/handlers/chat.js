@@ -10,35 +10,28 @@ exports.createChatRoom = (req, res) => {
   db.collection("chatrooms")
     .get()
     .then(data => {
-      if (data.size > 0) {
-        const chatRoom = newChatRoom;
-        data.forEach(doc => {
-          if (
-            (doc.data().members[0].username ==
-              newChatRoom.members[0].username &&
-              doc.data().members[1].username ==
-                newChatRoom.members[1].username) ||
-            (doc.data().members[0].username ==
-              newChatRoom.members[1].username &&
-              doc.data().members[1].username ==
-                newChatRoom.members[0].username) ||
-            (doc.data().members[1].username ==
-              newChatRoom.members[0].username &&
-              doc.data().members[0].username == newChatRoom.members[1].username)
-          ) {
-            chatRoom.chatId = doc.id;
-          }
-        });
-        res.json(chatRoom);
-      } else
-        return db
-          .collection("chatrooms")
-          .add(newChatRoom)
-          .then(doc => {
-            const chatRoom = newChatRoom;
-            chatRoom.chatId = doc.id;
-            return res.status(201).json(chatRoom);
-          });
+      const chatRoom = newChatRoom;
+      data.forEach(doc => {
+        if (
+          (doc.data().members[0].username == newChatRoom.members[0].username &&
+            doc.data().members[1].username ==
+              newChatRoom.members[1].username) ||
+          (doc.data().members[0].username == newChatRoom.members[1].username &&
+            doc.data().members[1].username ==
+              newChatRoom.members[0].username) ||
+          (doc.data().members[1].username == newChatRoom.members[0].username &&
+            doc.data().members[0].username == newChatRoom.members[1].username)
+        ) {
+          chatRoom.chatId = doc.id;
+        }
+      });
+      if (chatRoom.chatId) res.json(chatRoom);
+      else return db.collection("chatrooms").add(newChatRoom);
+    })
+    .then(doc => {
+      const chatRoom = newChatRoom;
+      chatRoom.chatId = doc.id;
+      return res.status(201).json(chatRoom);
     })
     .catch(err => {
       console.error(err);
